@@ -1,0 +1,171 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+}
+
+/* Links */
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: #ffe47a;
+}
+
+/* Buttons */
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.login-btn {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-btn:hover {
+  background: white;
+  color: #4f46e5;
+}
+
+.get-started-btn {
+  background: white;
+  border: none;
+  color: #4f46e5;
+  padding: 8px 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.get-started-btn:hover {
+  background: #ffe47a;
+  color: black;
+}
+
+.profile-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.15);
+  padding: 8px 12px;
+  border-radius: 30px;
+  transition: 0.2s ease;
+}
+
+.profile-box:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.profile-pic {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+.profile-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+/* Profile drawer */
+.drawer-profile {
+  text-align: center;
+  padding: 15px 0;
+}
+
+.drawer-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #4f46e5;
+  margin-bottom: 10px;
+}
+
+.drawer-profile h3 {
+  margin: 5px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #222;
+}
+
+.drawer-profile p {
+  font-size: 14px;
+  opacity: 0.7;
+  margin-bottom: 20px;
+}
+
+.drawer-actions button {
+  margin-top: 10px;
+  border-radius: 10px !important;
+  height: 42px;
+  font-weight: 600;
+}
+.dropdown-menu {
+  background: white;
+  padding: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  width: 200px;
+}
+
+.dropdown-menu p {
+  margin: 0;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.dropdown-menu p:hover {
+  background: #f3f4f6;
+}
+.ant-dropdown-menu {
+  border-radius: 10px !important;
+  padding: 6px 0 !important;
+}
+
+.ant-dropdown-menu-item {
+  padding: 10px 18px !important;
+  font-size: 15px;
+}
+
+
+
+

@@ -1,0 +1,58 @@
+/* Intro */
+.lc-intro {
+  text-align: center;
+}
+
+.lc-title {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.lc-desc {
+  max-width: 650px;
+  margin: 10px auto;
+  opacity: 0.9;
+}
+
+.lc-highlights {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 25px;
+}
+
+.lc-card {
+  background: rgba(255,255,255,0.15);
+  padding: 20px;
+  border-radius: 16px;
+  width: 250px;
+  text-align: center;
+}
+
+.lc-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+/* Form Section */
+.consult-form {
+  max-width: 500px;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.consult-form label {
+  font-weight: 600;
+  margin-top: 15px;
+  display: block;
+}
+
+.select-box {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.upload-btn {
+  margin-top: 10px;
+  border-radius: 10px !important;
+}

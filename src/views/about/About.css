@@ -1,0 +1,43 @@
+.about-container {
+  max-width: 1000px;
+  margin: auto;
+  color: white;
+}
+
+.about-hero {
+  text-align: center;
+  padding: 20px;
+}
+
+.about-hero h1 {
+  font-size: 38px;
+  font-weight: 800;
+}
+
+.about-hero p {
+  font-size: 17px;
+  opacity: 0.85;
+  max-width: 700px;
+  margin: 10px auto;
+}
+
+.about-grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 20px;
+}
+
+.about-card {
+  background: rgba(255,255,255,0.15);
+  padding: 25px;
+  border-radius: 16px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.about-card h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}

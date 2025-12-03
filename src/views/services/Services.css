@@ -1,0 +1,87 @@
+.services-main {
+  text-align: center;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  color: white;
+}
+
+.services-title {
+  font-size: 38px;
+  font-weight: 800;
+}
+
+.services-subtitle {
+  font-size: 17px;
+  opacity: 0.9;
+  max-width: 650px;
+  margin: 10px auto 40px;
+}
+
+/* GRID */
+.services-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+  gap: 30px;
+  padding: 10px;
+}
+
+/* SERVICE CARD */
+.service-box {
+  background: rgba(255,255,255,0.15);
+  padding: 25px;
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  transition: 0.25s;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+.service-box:hover {
+  transform: translateY(-6px);
+  background: rgba(255,255,255,0.25);
+}
+
+/* ICON */
+.service-icon {
+  font-size: 46px;
+  margin-bottom: 12px;
+}
+
+/* TITLE */
+.service-box h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* TEXT */
+.service-box p {
+  font-size: 15px;
+  opacity: 0.9;
+  min-height: 50px;
+}
+
+/* PRICE */
+.service-price {
+  margin-top: 15px;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* BUTTON */
+.service-btn {
+  margin-top: 18px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background: white;
+  color: #4f46e5;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.service-btn:hover {
+  background: #f1f1f1;
+}

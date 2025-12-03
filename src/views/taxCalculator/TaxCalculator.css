@@ -1,0 +1,105 @@
+.groww-container {
+  max-width: 850px;
+  margin: auto;
+  padding: 20px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* White Main Card */
+.groww-card {
+  background: white;
+  color: black;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  border: 1px solid #f0f0f0;
+}
+
+/* Collapse */
+.label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f3f3;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+/* Button */
+.calculate-btn {
+  width: 160px;
+  height: 42px;
+  margin-top: 20px;
+  background: #00b386 !important;
+  border-radius: 8px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+/* ------------------- RESULT CARD ------------------- */
+
+.result {
+  margin-top: 30px;
+  padding: 25px;
+  border-radius: 16px;
+  background: white;
+  color: black;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+  border: 1px solid #ececec;
+}
+
+.result h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #222;
+}
+
+.result p {
+  font-size: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f3f3f3;
+  display: flex;
+  justify-content: space-between;
+  color: #444;
+}
+
+.result p:last-child {
+  border-bottom: none;
+}
+
+.result h3 {
+  margin-top: 18px;
+  font-size: 18px;
+  font-weight: 700;
+  background: #f7f8ff;
+  padding: 12px 18px;
+  border-radius: 10px;
+  color: #222;
+  border: 1px solid #e5e7ff;
+}
+
+/* Highlighting better regime */
+.best-regime {
+  background: #e8fff5 !important; /* light green */
+  border: 1px solid #23c983 !important;
+  color: #11995c !important;
+}
+
+.worse-regime {
+  background: #fff1f1 !important;
+  border: 1px solid #ffb6b6 !important;
+  color: #d62323 !important;
+}

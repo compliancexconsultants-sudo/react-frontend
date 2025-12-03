@@ -1,0 +1,78 @@
+.contact-container {
+  max-width: 650px;
+  margin: auto;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+/* TITLE */
+.contact-title {
+  font-size: 36px;
+  font-weight: 800;
+}
+
+/* SUBTEXT */
+.contact-sub {
+  opacity: 0.85;
+  margin-bottom: 30px;
+}
+
+/* INFO GRID */
+.contact-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.contact-card {
+  background: rgba(255,255,255,0.15);
+  padding: 20px;
+  border-radius: 14px;
+  width: 40%;
+  backdrop-filter: blur(10px);
+}
+
+/* FORM */
+.contact-form {
+  margin-top: 20px;
+  text-align: left;
+}
+
+/* FIX INPUT WIDTH + BACKGROUND + PLACEHOLDER */
+.input {
+  width: 100% !important;
+  border-radius: 10px !important;
+  height: 45px;
+  padding: 8px 12px;
+  margin-bottom: 15px;
+  background: rgba(255,255,255,0.2) !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  color: #fff !important;
+}
+
+/* FIX PLACEHOLDER VISIBILITY */
+.input::placeholder {
+  color: rgba(255,255,255,0.8) !important;
+}
+
+/* TEXTAREA FIX */
+.ant-input-textarea textarea {
+  background: rgba(255,255,255,0.2) !important;
+  border-radius: 10px !important;
+  color: white !important;
+}
+
+.ant-input-textarea textarea::placeholder {
+  color: rgba(255,255,255,0.8) !important;
+}
+
+/* BUTTON */
+.send-button {
+  width: 100%;
+  height: 45px;
+  border-radius: 10px !important;
+  font-weight: 600;
+}

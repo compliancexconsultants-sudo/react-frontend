@@ -1,0 +1,12 @@
+.layout-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+.main-content {
+  flex: 1;
+  padding: 60px 40px;
+  color: white;
+}
