@@ -5,13 +5,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDimDlSCh16Va99fTU-UHGVy-LD6FsuMDY",
-  authDomain: "jmlegalhub.firebaseapp.com",
-  projectId: "jmlegalhub",
-  storageBucket: "jmlegalhub.firebasestorage.app",
-  messagingSenderId: "13196761748",
-  appId: "1:13196761748:web:563bdfc8282d45380c3281",
-  measurementId: "G-NW2ND5D8CJ"
+  apiKey: "AIzaSyDtjta9Q4RYxhNybUxTgyOsvlGgUUoPHzA",
+  authDomain: "compliancexconsultants-adedc.firebaseapp.com",
+  projectId: "compliancexconsultants-adedc",
+  storageBucket: "compliancexconsultants-adedc.firebasestorage.app",
+  messagingSenderId: "898997600044",
+  appId: "1:898997600044:web:7925851e58a07551d73689",
+  measurementId: "G-KLVJ4F3GC3"
 };
 
 const app = initializeApp(firebaseConfig);
