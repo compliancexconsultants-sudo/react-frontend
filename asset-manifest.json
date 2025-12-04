@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/react-frontend/static/css/main.a1104245.css",
-    "main.js": "/react-frontend/static/js/main.0e75c076.js",
-    "static/js/453.7a896628.chunk.js": "/react-frontend/static/js/453.7a896628.chunk.js",
-    "static/media/office.jpg": "/react-frontend/static/media/office.7236964861515a04510b.jpg",
-    "index.html": "/react-frontend/index.html",
-    "main.a1104245.css.map": "/react-frontend/static/css/main.a1104245.css.map",
-    "main.0e75c076.js.map": "/react-frontend/static/js/main.0e75c076.js.map",
-    "453.7a896628.chunk.js.map": "/react-frontend/static/js/453.7a896628.chunk.js.map"
+    "main.css": "/static/css/main.a1104245.css",
+    "main.js": "/static/js/main.e8a2d7a6.js",
+    "static/js/453.7a896628.chunk.js": "/static/js/453.7a896628.chunk.js",
+    "static/media/office.jpg": "/static/media/office.7236964861515a04510b.jpg",
+    "index.html": "/index.html",
+    "main.a1104245.css.map": "/static/css/main.a1104245.css.map",
+    "main.e8a2d7a6.js.map": "/static/js/main.e8a2d7a6.js.map",
+    "453.7a896628.chunk.js.map": "/static/js/453.7a896628.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a1104245.css",
-    "static/js/main.0e75c076.js"
+    "static/js/main.e8a2d7a6.js"
   ]
 }
