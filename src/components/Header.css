@@ -1,3 +1,4 @@
+/* Header */
 .header {
   position: sticky;
   top: 0;
@@ -15,13 +16,15 @@
   justify-content: space-between;
 }
 
+/* Logo */
 .logo {
   font-size: 22px;
   font-weight: 700;
   color: white;
+  cursor: pointer;
 }
 
-/* Links */
+/* Desktop Nav Links */
 .nav-links {
   display: flex;
   gap: 30px;
@@ -31,6 +34,7 @@
   color: white;
   text-decoration: none;
   font-size: 16px;
+  cursor: pointer;
   transition: 0.3s;
 }
 
@@ -75,19 +79,20 @@
   color: black;
 }
 
+/* Profile Box */
 .profile-box {
   display: flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   padding: 8px 12px;
   border-radius: 30px;
   transition: 0.2s ease;
 }
 
 .profile-box:hover {
-  background: rgba(255,255,255,0.25);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .profile-pic {
@@ -103,69 +108,51 @@
   font-weight: 600;
   color: white;
 }
-/* Profile drawer */
-.drawer-profile {
-  text-align: center;
-  padding: 15px 0;
-}
 
-.drawer-pic {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #4f46e5;
-  margin-bottom: 10px;
-}
+/*
+========================
+ MOBILE RESPONSIVENESS
+========================
+*/
 
-.drawer-profile h3 {
-  margin: 5px 0;
-  font-size: 20px;
-  font-weight: 700;
-  color: #222;
-}
-
-.drawer-profile p {
-  font-size: 14px;
-  opacity: 0.7;
-  margin-bottom: 20px;
-}
-
-.drawer-actions button {
-  margin-top: 10px;
-  border-radius: 10px !important;
-  height: 42px;
-  font-weight: 600;
-}
-.dropdown-menu {
-  background: white;
-  padding: 10px 0;
-  border-radius: 10px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-  width: 200px;
-}
-
-.dropdown-menu p {
-  margin: 0;
-  padding: 10px 16px;
+.hamburger {
+  display: none;
+  font-size: 26px;
+  color: white;
   cursor: pointer;
-  font-size: 15px;
+}
+
+/* Hide desktop nav on mobile */
+@media (max-width: 768px) {
+  .nav-links,
+  .header-buttons {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+.drawer-item {
+  background: white;
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  cursor: pointer;
   transition: 0.2s;
 }
 
-.dropdown-menu p:hover {
-  background: #f3f4f6;
-}
-.ant-dropdown-menu {
-  border-radius: 10px !important;
-  padding: 6px 0 !important;
+.drawer-item i {
+  font-size: 20px;
+  color: #4f46e5;
 }
 
-.ant-dropdown-menu-item {
-  padding: 10px 18px !important;
-  font-size: 15px;
+.drawer-item:hover {
+  background: #eef0ff;
 }
-
-
-
 

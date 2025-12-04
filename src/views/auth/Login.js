@@ -17,13 +17,13 @@ const Login = () => {
       const user = userCred.user;
 
       // Sync with backend
-      await API.post("/users/sync", {
-        firebaseUid: user.uid,
-        name: user.displayName || "",
-        email: user.email,
-        phone: user.phoneNumber || "",
-        photoURL: user.photoURL || ""
-      });
+      // await API.post("/users/sync", {
+      //   firebaseUid: user.uid,
+      //   name: user.displayName || "",
+      //   email: user.email,
+      //   phone: user.phoneNumber || "",
+      //   photoURL: user.photoURL || ""
+      // });
 
       // Save locally
       localStorage.setItem("legalhubUser", JSON.stringify({
@@ -45,13 +45,13 @@ const Login = () => {
       const user = result.user;
 
       // Sync with backend
-      await API.post("/users/sync", {
-        firebaseUid: user.uid,
-        name: user.displayName || "",
-        email: user.email,
-        phone: user.phoneNumber || "",
-        photoURL: user.photoURL || ""
-      });
+      // await API.post("/users/sync", {
+      //   firebaseUid: user.uid,
+      //   name: user.displayName || "",
+      //   email: user.email,
+      //   phone: user.phoneNumber || "",
+      //   photoURL: user.photoURL || ""
+      // });
 
       // Save locally
       localStorage.setItem("legalhubUser", JSON.stringify({
