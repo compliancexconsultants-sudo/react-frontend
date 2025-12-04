@@ -31,7 +31,7 @@ import Orders from "./views/orders/Orders";
 
 function App() {
   return (
-    <BrowserRouter basename="/react-frontend">
+    <BrowserRouter>
 
       <Routes>
         <Route path="/" element={<Home />} />
