@@ -5,7 +5,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Upload, Button, Spin } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import API from "../../utils/api";
-
+import UploadLoader from "../../components/uploader";
+import Lottie from "lottie-react";
+import uploadAnim from "../../animations/uploading.json";
+import successAnim from "../../animations/Success.json";
 const SubmitDocuments = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -13,6 +16,8 @@ const SubmitDocuments = () => {
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
   const [documents, setDocuments] = useState({});
+  const [isUploading, setIsUploading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     loadService();
@@ -45,10 +50,11 @@ const SubmitDocuments = () => {
   const handleSubmit = async () => {
     try {
       const loggedUser = JSON.parse(localStorage.getItem("legalhubUser"));
-      if (!loggedUser) return alert("Please login first!");
+      if (!loggedUser) return navigate("/login");
+
+      setIsUploading(true); // ⬅️ start loader
 
       const formData = new FormData();
-
       formData.append("serviceId", service._id);
       formData.append("serviceName", service.name);
       formData.append("serviceSlug", service.name);
@@ -64,19 +70,29 @@ const SubmitDocuments = () => {
 
       const res = await API.post("/cases/submit", formData);
 
-      navigate(`/service/${service._id}/payment`, {
-        state: {
-          amount: service.price,
-          caseId: res.data.case.caseId,
-          serviceName: service.name,
-        }
-      });
+      // ✅ Upload finished
+      setIsUploading(false);
+      setIsSuccess(true); // ⬅️ show success animation
+
+      // ⏱️ Wait 4 seconds then redirect
+      setTimeout(() => {
+        navigate(`/service/${service._id}/payment`, {
+          state: {
+            amount: service.price,
+            caseId: res.data.case.caseId,
+            serviceName: service.name,
+          },
+        });
+      }, 4000);
 
     } catch (error) {
+      setIsUploading(false);
       console.log(error);
       alert("Error while submitting documents");
     }
   };
+
+
 
   if (loading) {
     return (
@@ -87,6 +103,28 @@ const SubmitDocuments = () => {
       </Layout>
     );
   }
+
+  if (isUploading) {
+    return (
+      <div className="upload-overlay">
+        <Lottie animationData={uploadAnim} loop />
+        <p>Uploading documents, please wait...</p>
+      </div>
+    )
+  }
+
+  if (isSuccess) {
+    return (
+      <div className="upload-overlay">
+        <Lottie animationData={successAnim} loop={false} />
+        <p>Documents submitted successfully 🎉</p>
+      </div>
+    )
+  }
+  const isAllDocumentsUploaded = () => {
+    return Object.values(documents).every((file) => file !== null);
+  };
+
 
   return (
     <Layout>
@@ -135,9 +173,11 @@ const SubmitDocuments = () => {
             type="primary"
             className="submit-doc-btn"
             onClick={handleSubmit}
+            disabled={isUploading || !isAllDocumentsUploaded()}
           >
             Submit & Continue
           </Button>
+
         </div>
 
       </div>

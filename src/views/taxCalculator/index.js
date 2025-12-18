@@ -31,14 +31,30 @@ export default function TaxCalculator() {
   const [npsEmp, setNpsEmp] = useState("");
   const [npsOrg, setNpsOrg] = useState("");
   const [otherDed, setOtherDed] = useState("");
+  const normalizedInputs = [
+    salary,
+    exempt,
+    interest,
+    other,
+    crypto,
+    c80,
+    d80,
+    npsEmp,
+    npsOrg,
+    otherDed,
+  ].map(parseNum).join("|");
+
 
   /* ================= TAX CALCULATION ================= */
   const result = useMemo(() => {
+
     const sal = parseNum(salary);
     const ex = parseNum(exempt);
     const int = parseNum(interest);
     const oth = parseNum(other);
     const cry = parseNum(crypto);
+
+
 
     const grossOld = Math.max(0, sal - ex) + int + oth;
     const stdOld = grossOld > 0 ? 50000 : 0;
@@ -50,39 +66,69 @@ export default function TaxCalculator() {
       parseNum(npsOrg) +
       parseNum(otherDed);
 
+    // ===== OLD REGIME =====
     const taxableOld = Math.max(0, grossOld - stdOld - dedOld);
-    let oldTax = calcOldSlabTax(taxableOld, age);
-    if (taxableOld <= 500000) oldTax = 0;
-    oldTax += cry * 0.3;
-    oldTax *= 1.04;
 
+    // slab tax
+    let slabOld = calcOldSlabTax(taxableOld, age);
+
+    // 87A rebate (ONLY on slab tax)
+    let rebateOld = 0;
+    if (taxableOld <= 500000) {
+      rebateOld = Math.min(12500, slabOld);
+    }
+    slabOld -= rebateOld;
+    if (slabOld < 0) slabOld = 0;
+
+    // crypto tax (NO rebate)
+    const cryptoTaxOld = cry * 0.3;
+
+    // cess
+    const cessOld = (slabOld + cryptoTaxOld) * 0.04;
+
+    const totalOldTax = slabOld + cryptoTaxOld + cessOld;
+
+    // ===== NEW REGIME =====
     const grossNew = sal + int + oth;
     const stdNew = grossNew > 0 ? 75000 : 0;
     const taxableNew = Math.max(0, grossNew - stdNew - parseNum(npsOrg));
 
-    let newTax = calcNewSlabTax(taxableNew);
-    if (taxableNew <= 1200000) newTax = 0;
-    newTax += cry * 0.3;
-    newTax *= 1.04;
+    // slab tax
+    let slabNew = calcNewSlabTax(taxableNew);
 
+    // 87A rebate (ONLY on slab tax)
+    let rebateNew = 0;
+    if (taxableNew <= 1200000) {
+      rebateNew = Math.min(60000, slabNew);
+    }
+    slabNew -= rebateNew;
+    if (slabNew < 0) slabNew = 0;
+
+    // crypto tax
+    const cryptoTaxNew = cry * 0.3;
+
+    // cess
+    const cessNew = (slabNew + cryptoTaxNew) * 0.04;
+
+    let totalNewTax = slabNew + cryptoTaxNew + cessNew;
+    // ===== MARGINAL RELIEF (NEW REGIME) =====
+    if (taxableNew > 1200000 && taxableNew <= 1275000) {
+      const excessIncome = taxableNew - 1200000;
+      const maxTaxAllowed = excessIncome * 1.04; // incl. cess
+
+      if (totalNewTax > maxTaxAllowed) {
+        totalNewTax = maxTaxAllowed;
+      }
+    }
+
+    // ===== FINAL RESULT =====
     return {
-      oldTax: Math.round(oldTax),
-      newTax: Math.round(newTax),
-      save: Math.abs(Math.round(oldTax - newTax)),
+      oldTax: Math.round(totalOldTax),
+      newTax: Math.round(totalNewTax),
+      save: Math.round(Math.abs(totalOldTax - totalNewTax)),
     };
-  }, [
-    salary,
-    exempt,
-    interest,
-    other,
-    crypto,
-    c80,
-    d80,
-    npsEmp,
-    npsOrg,
-    otherDed,
-    age,
-  ]);
+
+  }, [normalizedInputs, age]);
 
   /* ================= PDF DATA ================= */
   const pdfData = {
@@ -233,9 +279,19 @@ export default function TaxCalculator() {
 const Field = ({ label, value, set }) => (
   <div className="ct-field">
     <label>{label}</label>
-    <input type="number" value={value} onChange={(e) => set(e.target.value)} />
+    <input
+      type="text"
+      inputMode="numeric"
+      placeholder="0"
+      value={value}
+      onChange={(e) => {
+        const v = e.target.value.replace(/[^0-9]/g, "");
+        set(v);
+      }}
+    />
   </div>
 );
+
 
 const Select = ({ label, value, onChange, options }) => (
   <div className="ct-select">
