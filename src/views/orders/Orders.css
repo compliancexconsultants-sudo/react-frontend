@@ -1,37 +1,165 @@
+/* ===================== PAGE CONTAINER ===================== */
 .orders-container {
-  max-width: 900px;
+  max-width: 1100px;
   margin: auto;
-  color: white;
+  padding: 40px 20px;
+  color: #111827;
 }
 
+/* ===================== TITLE ===================== */
 .orders-title {
-  font-size: 34px;
+  font-size: 40px;
   font-weight: 800;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
+  position: relative;
 }
 
+.orders-title::after {
+  content: "";
+  width: 90px;
+  height: 5px;
+  background: linear-gradient(90deg, #14274D, #203560);
+  border-radius: 6px;
+  display: block;
+  margin: 12px auto 0;
+  animation: titleLine 0.7s ease-out forwards;
+}
+
+@keyframes titleLine {
+  from { width: 0; opacity: 0; }
+  to { width: 90px; opacity: 1; }
+}
+
+/* ===================== EMPTY STATE ===================== */
 .no-orders {
   text-align: center;
+  font-size: 17px;
   opacity: 0.7;
   margin-top: 20px;
 }
 
+/* ===================== GRID ===================== */
 .orders-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 25px;
 }
 
+/* ===================== ORDER CARD ===================== */
 .order-card {
-  background: rgba(255,255,255,0.18);
-  padding: 20px;
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  transition: 0.25s ease;
+  border: 1px solid #e5e7eb;
 }
 
-.status {
-  margin-top: 10px;
+.order-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+}
+
+/* ===================== HEADER ===================== */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.order-header h3 {
+  font-size: 20px;
   font-weight: 700;
-  color: #ffe58f;
+  color: #111827;
+}
+
+/* ===================== STATUS CHIP ===================== */
+.status-chip {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+
+.status-chip.completed {
+  background: #16a34a;
+}
+
+.status-chip.progress {
+  background: #f59e0b;
+}
+
+.status-chip.pending {
+  background: #6b7280;
+}
+
+/* ===================== TEXT ===================== */
+.order-field {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #374151;
+}
+
+/* ===================== BUTTONS ===================== */
+.case-btn {
+  margin-top: 12px;
+  width: 100%;
+  padding: 11px;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* Chat Button */
+.chat-btn {
+  background: #14274D;
+  color: white;
+}
+
+.chat-btn:hover {
+  background: #3730a3;
+  transform: translateY(-3px);
+}
+
+/* View Button */
+.view-btn {
+  background: #203560;
+  color: white;
+}
+
+.view-btn:hover {
+  background: #ea580c;
+  transform: translateY(-3px);
+}
+
+/* ===================== ANIMATIONS ===================== */
+.scale-up {
+  opacity: 0;
+  transform: scale(0.9);
+  animation: scaleUp 0.6s ease forwards;
+}
+
+@keyframes scaleUp {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

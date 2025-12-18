@@ -18,7 +18,7 @@ const CompanyPayment = () => {
         name: "LegalHub - Pvt Ltd Registration",
         description: "Company Registration Payment",
         handler: () => navigate("/payment-success"),
-        theme: { color: "#4f46e5" },
+        theme: { color: "#14274D" },
       });
       rzp.open();
     };

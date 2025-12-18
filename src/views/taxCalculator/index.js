@@ -1,316 +1,267 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Layout from "../../components/Layout";
-import { Collapse, Select, InputNumber, Button, Switch } from "antd";
 import "./TaxCalculator.css";
+import { parseNum, calcOldSlabTax, calcNewSlabTax } from "./taxUtils";
 
-const { Panel } = Collapse;
-const { Option } = Select;
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
-const TaxCalculator = () => {
-    // ------------------------------ STATES ------------------------------
-    const [assessmentYear, setAssessmentYear] = useState("2025-26");
-    const [ageCategory, setAgeCategory] = useState("below60");
+import TaxReportPDF from "./TaxReportPDF";
 
-    const [income, setIncome] = useState({
-        salary: 0,
-        other: 0,
-        interest: 0,
-    });
+const FY_OPTIONS = ["2025-26"];
+const AGE_OPTIONS = ["Below 60", "60 - 80", "80 and above"];
 
-    const [deductions, setDeductions] = useState({
-        section80C: 0,
-        section80D: 0,
-        nps: 0,
-    });
+export default function TaxCalculator() {
+  const [tab, setTab] = useState("basic");
 
-    const [hra, setHra] = useState({
-        rentPaid: 0,
-        basicSalary: 0,
-        da: 0,
-        metro: false,
-    });
+  // BASIC
+  const [financialYear, setFinancialYear] = useState("2025-26");
+  const [age, setAge] = useState("Below 60");
 
-    const [result, setResult] = useState(null);
+  // INCOME
+  const [salary, setSalary] = useState("");
+  const [exempt, setExempt] = useState("");
+  const [interest, setInterest] = useState("");
+  const [other, setOther] = useState("");
+  const [crypto, setCrypto] = useState("");
 
-    // ------------------------------ HELPERS ------------------------------
+  // DEDUCTIONS
+  const [c80, setC80] = useState("");
+  const [d80, setD80] = useState("");
+  const [npsEmp, setNpsEmp] = useState("");
+  const [npsOrg, setNpsOrg] = useState("");
+  const [otherDed, setOtherDed] = useState("");
 
-    const getAgeSlabLimit = () => {
-        if (ageCategory === "below60") return 250000;
-        if (ageCategory === "60-80") return 300000;
-        if (ageCategory === "above80") return 500000;
+  /* ================= TAX CALCULATION ================= */
+  const result = useMemo(() => {
+    const sal = parseNum(salary);
+    const ex = parseNum(exempt);
+    const int = parseNum(interest);
+    const oth = parseNum(other);
+    const cry = parseNum(crypto);
+
+    const grossOld = Math.max(0, sal - ex) + int + oth;
+    const stdOld = grossOld > 0 ? 50000 : 0;
+
+    const dedOld =
+      Math.min(parseNum(c80), 150000) +
+      Math.min(parseNum(d80), age === "Below 60" ? 25000 : 50000) +
+      Math.min(parseNum(npsEmp), 50000) +
+      parseNum(npsOrg) +
+      parseNum(otherDed);
+
+    const taxableOld = Math.max(0, grossOld - stdOld - dedOld);
+    let oldTax = calcOldSlabTax(taxableOld, age);
+    if (taxableOld <= 500000) oldTax = 0;
+    oldTax += cry * 0.3;
+    oldTax *= 1.04;
+
+    const grossNew = sal + int + oth;
+    const stdNew = grossNew > 0 ? 75000 : 0;
+    const taxableNew = Math.max(0, grossNew - stdNew - parseNum(npsOrg));
+
+    let newTax = calcNewSlabTax(taxableNew);
+    if (taxableNew <= 1200000) newTax = 0;
+    newTax += cry * 0.3;
+    newTax *= 1.04;
+
+    return {
+      oldTax: Math.round(oldTax),
+      newTax: Math.round(newTax),
+      save: Math.abs(Math.round(oldTax - newTax)),
     };
+  }, [
+    salary,
+    exempt,
+    interest,
+    other,
+    crypto,
+    c80,
+    d80,
+    npsEmp,
+    npsOrg,
+    otherDed,
+    age,
+  ]);
 
-    // HRA Exemption
-    const calculateHRA = () => {
-        const { rentPaid, basicSalary, da, metro } = hra;
-        const basicDA = Number(basicSalary) + Number(da);
+  /* ================= PDF DATA ================= */
+  const pdfData = {
+    financialYear,
+    age,
+    salary: parseNum(salary),
+    interest: parseNum(interest),
+    other: parseNum(other),
+    crypto: parseNum(crypto),
+    result,
+  };
 
-        const rule1 = rentPaid - (0.10 * basicDA);
-        const rule2 = metro ? 0.50 * basicDA : 0.40 * basicDA;
-        const rule3 = basicDA * 0.4;
+  /* ================= DOWNLOAD PDF ================= */
+  const downloadReport = async () => {
+    const pdf = new jsPDF("p", "px", "a4");
+    const pages = document.querySelectorAll(".pdf-page");
 
-        return Math.max(0, Math.min(rule1, rule2, rule3));
-    };
+    for (let i = 0; i < pages.length; i++) {
+      const canvas = await html2canvas(pages[i], {
+        scale: 2,
+        useCORS: true,
+      });
 
-    // Old Regime Slabs
-    const calculateOldRegime = (taxable) => {
-        const slabs = [
-            { upto: getAgeSlabLimit(), rate: 0 },
-            { upto: 500000, rate: 0.05 },
-            { upto: 1000000, rate: 0.20 },
-            { upto: Infinity, rate: 0.30 },
-        ];
+      const imgData = canvas.toDataURL("image/png");
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
 
-        let prev = 0;
-        let tax = 0;
+      if (i !== 0) pdf.addPage();
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    }
 
-        slabs.forEach((slab) => {
-            if (taxable > prev) {
-                const amount = Math.min(taxable, slab.upto) - prev;
-                tax += amount * slab.rate;
-                prev = slab.upto;
-            }
-        });
+    pdf.save(`Complix_Income_Tax_Report_${financialYear}.pdf`);
+  };
 
-        // Section 87A rebate (Up to 5 lakhs)
-        if (taxable <= 500000) tax = 0;
+  /* ================= UI ================= */
+  return (
+    <Layout>
+      <div className="ct-page">
 
-        return Math.round(tax);
-    };
+        {/* ===== TABS ===== */}
+        <div className="ct-tabs">
+          {["basic", "income", "deduction"].map((t) => (
+            <button
+              key={t}
+              className={tab === t ? "active" : ""}
+              onClick={() => setTab(t)}
+            >
+              {t.toUpperCase()}
+            </button>
+          ))}
+        </div>
 
-    // New Regime Slabs (2024–25 onwards)
-    const calculateNewRegime = (taxable) => {
-        const slabs = [
-            { upto: 300000, rate: 0 },
-            { upto: 600000, rate: 0.05 },
-            { upto: 900000, rate: 0.10 },
-            { upto: 1200000, rate: 0.15 },
-            { upto: 1500000, rate: 0.20 },
-            { upto: Infinity, rate: 0.30 },
-        ];
+        <div className="ct-layout">
 
-        let prev = 0;
-        let tax = 0;
+          {/* ===== LEFT FORM ===== */}
+          <div className="ct-form">
 
-        slabs.forEach((slab) => {
-            if (taxable > prev) {
-                const amount = Math.min(taxable, slab.upto) - prev;
-                tax += amount * slab.rate;
-                prev = slab.upto;
-            }
-        });
-
-        // New regime rebate (Up to 7 lakh)
-        if (taxable <= 700000) tax = 0;
-
-        return Math.round(tax);
-    };
-
-    // ------------------------------ MAIN CALC ------------------------------
-
-    const calculateTax = () => {
-        const grossIncome =
-            Number(income.salary) + Number(income.other) + Number(income.interest);
-
-        const hraExemption = calculateHRA();
-
-        // Deductions capped by law
-        const totalDeductions =
-            Math.min(150000, deductions.section80C) +
-            Math.min(25000, deductions.section80D) +
-            Math.min(50000, deductions.nps) +
-            hraExemption;
-
-        const taxableOld = Math.max(0, grossIncome - totalDeductions);
-        const taxableNew = grossIncome; // New regime = no deductions except employer NPS
-
-        const oldTax = calculateOldRegime(taxableOld);
-        const newTax = calculateNewRegime(taxableNew);
-
-        setResult({
-            grossIncome,
-            totalDeductions,
-            hraExemption,
-            taxableOld,
-            taxableNew,
-            oldTax,
-            newTax,
-        });
-    };
-
-    // ------------------------------ UI ------------------------------
-
-    return (
-        <Layout>
-            <section className="groww-container">
-                <h1 className="title">Income Tax Calculator</h1>
-
-                <div className="groww-card">
-                    <Collapse ghost expandIconPosition="end">
-
-                        {/* Assessment Year */}
-                        <Panel header={<span className="label">Assessment year</span>} key="1">
-                            <Select
-                                value={assessmentYear}
-                                onChange={setAssessmentYear}
-                                style={{ width: "100%" }}
-                            >
-                                <Option value="2025-26">2025 – 2026</Option>
-                                <Option value="2024-25">2024 – 2025</Option>
-                            </Select>
-                        </Panel>
-
-                        {/* Age Category */}
-                        <Panel header={<span className="label">Age category</span>} key="2">
-                            <Select
-                                value={ageCategory}
-                                onChange={setAgeCategory}
-                                style={{ width: "100%" }}
-                            >
-                                <Option value="below60">Below 60</Option>
-                                <Option value="60-80">60 – 80</Option>
-                                <Option value="above80">Above 80</Option>
-                            </Select>
-                        </Panel>
-
-                        {/* Income */}
-                        <Panel header={<span className="label">Income</span>} key="3">
-                            {[
-                                { label: "Salary Income", key: "salary" },
-                                { label: "Other Income", key: "other" },
-                                { label: "Interest Income", key: "interest" },
-                            ].map((row) => (
-                                <div className="row" key={row.key}>
-                                    <span>{row.label}</span>
-                                    <InputNumber
-                                        min={0}
-                                        style={{ width: "50%" }}
-                                        value={income[row.key]}
-                                        onChange={(v) => setIncome({ ...income, [row.key]: v })}
-                                    />
-                                </div>
-                            ))}
-                        </Panel>
-
-                        {/* Deductions */}
-                        <Panel header={<span className="label">Deductions</span>} key="4">
-                            {[
-                                { label: "80C Investment", key: "section80C" },
-                                { label: "80D Medical", key: "section80D" },
-                                { label: "NPS (80CCD1B)", key: "nps" },
-                            ].map((row) => (
-                                <div className="row" key={row.key}>
-                                    <span>{row.label}</span>
-                                    <InputNumber
-                                        min={0}
-                                        style={{ width: "50%" }}
-                                        value={deductions[row.key]}
-                                        onChange={(v) =>
-                                            setDeductions({ ...deductions, [row.key]: v })
-                                        }
-                                    />
-                                </div>
-                            ))}
-                        </Panel>
-
-                        {/* HRA */}
-                        <Panel header={<span className="label">HRA Exemption</span>} key="5">
-                            <div className="row">
-                                <span>Rent Paid</span>
-                                <InputNumber
-                                    min={0}
-                                    style={{ width: "50%" }}
-                                    value={hra.rentPaid}
-                                    onChange={(v) => setHra({ ...hra, rentPaid: v })}
-                                />
-                            </div>
-
-                            <div className="row">
-                                <span>Basic Salary</span>
-                                <InputNumber
-                                    min={0}
-                                    style={{ width: "50%" }}
-                                    value={hra.basicSalary}
-                                    onChange={(v) => setHra({ ...hra, basicSalary: v })}
-                                />
-                            </div>
-
-                            <div className="row">
-                                <span>DA</span>
-                                <InputNumber
-                                    min={0}
-                                    style={{ width: "50%" }}
-                                    value={hra.da}
-                                    onChange={(v) => setHra({ ...hra, da: v })}
-                                />
-                            </div>
-
-                            <div className="row">
-                                <span>Metro City?</span>
-                                <Switch
-                                    checked={hra.metro}
-                                    onChange={(val) => setHra({ ...hra, metro: val })}
-                                />
-                            </div>
-                        </Panel>
-                    </Collapse>
-
-                    <Button
-                        type="primary"
-                        className="calculate-btn"
-                        onClick={calculateTax}
-                    >
-                        CALCULATE
-                    </Button>
+            {tab === "basic" && (
+              <>
+                <div className="ct-top">
+                  <Select
+                    label="Financial Year"
+                    value={financialYear}
+                    onChange={setFinancialYear}
+                    options={FY_OPTIONS}
+                  />
+                  <Select
+                    label="Age Category"
+                    value={age}
+                    onChange={setAge}
+                    options={AGE_OPTIONS}
+                  />
                 </div>
 
-                {/* -------- RESULTS -------- */}
-                {result && (
-                    <div className="groww-card result">
-                        <h2>Tax Summary</h2>
+                <Actions>
+                  <Primary onClick={() => setTab("income")}>Continue</Primary>
+                </Actions>
+              </>
+            )}
 
-                        <p>
-                            <span>Gross Income</span>
-                            <span>₹{result.grossIncome.toLocaleString()}</span>
-                        </p>
+            {tab === "income" && (
+              <>
+                <div className="ct-grid">
+                  <Field label="Salary Income" value={salary} set={setSalary} />
+                  <Field label="Exempt Allowances" value={exempt} set={setExempt} />
+                  <Field label="Interest Income" value={interest} set={setInterest} />
+                  <Field label="Other Income" value={other} set={setOther} />
+                  <Field label="Crypto Income" value={crypto} set={setCrypto} />
+                </div>
 
-                        <p>
-                            <span>Total Deductions</span>
-                            <span>₹{result.totalDeductions.toLocaleString()}</span>
-                        </p>
+                <Actions>
+                  <Secondary onClick={() => setTab("basic")}>Back</Secondary>
+                  <Primary onClick={() => setTab("deduction")}>Continue</Primary>
+                </Actions>
+              </>
+            )}
 
-                        <p>
-                            <span>Taxable Income (Old Regime)</span>
-                            <span>₹{result.taxableOld.toLocaleString()}</span>
-                        </p>
+            {tab === "deduction" && (
+              <>
+                <div className="ct-grid">
+                  <Field label="80C" value={c80} set={setC80} />
+                  <Field label="80D" value={d80} set={setD80} />
+                  <Field label="NPS Employee" value={npsEmp} set={setNpsEmp} />
+                  <Field label="NPS Employer" value={npsOrg} set={setNpsOrg} />
+                  <Field label="Other Deduction" value={otherDed} set={setOtherDed} />
+                </div>
 
-                        <p>
-                            <span>Taxable Income (New Regime)</span>
-                            <span>₹{result.taxableNew.toLocaleString()}</span>
-                        </p>
+                <Actions>
+                  <Secondary onClick={() => setTab("income")}>Back</Secondary>
+                  <Primary onClick={downloadReport}>Download Report</Primary>
+                </Actions>
+              </>
+            )}
+          </div>
 
-                        {/* Determine better regime */}
-                        <h3
-                            className={
-                                result.oldTax < result.newTax ? "best-regime" : "worse-regime"
-                            }
-                        >
-                            Old Regime Tax: ₹{result.oldTax.toLocaleString()}
-                        </h3>
+          {/* ===== SUMMARY ===== */}
+          <div className="ct-summary">
+            <h3>Tax Summary</h3>
 
-                        <h3
-                            className={
-                                result.newTax < result.oldTax ? "best-regime" : "worse-regime"
-                            }
-                        >
-                            New Regime Tax: ₹{result.newTax.toLocaleString()}
-                        </h3>
-                    </div>
-                )}
+            <div className="ct-row">
+              <span>Old Regime</span>
+              <strong>₹ {result.oldTax.toLocaleString()}</strong>
+            </div>
 
-            </section>
-        </Layout>
-    );
-};
+            <div className="ct-row highlight">
+              <span>New Regime (Best)</span>
+              <strong>₹ {result.newTax.toLocaleString()}</strong>
+            </div>
 
-export default TaxCalculator;
+            <div className="ct-save">
+              You Save ₹ {result.save.toLocaleString()}
+            </div>
+          </div>
+        </div>
+
+        {/* ===== HIDDEN PDF RENDER ===== */}
+        <div style={{ position: "absolute", left: "-9999px", top: 0 }}>
+          <TaxReportPDF data={pdfData} />
+        </div>
+
+      </div>
+    </Layout>
+  );
+}
+
+/* ================= SMALL COMPONENTS ================= */
+
+const Field = ({ label, value, set }) => (
+  <div className="ct-field">
+    <label>{label}</label>
+    <input type="number" value={value} onChange={(e) => set(e.target.value)} />
+  </div>
+);
+
+const Select = ({ label, value, onChange, options }) => (
+  <div className="ct-select">
+    <label>{label}</label>
+    <select
+      style={{ marginLeft: 30 }}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    >
+      {options.map((o) => (
+        <option key={o}>{o}</option>
+      ))}
+    </select>
+  </div>
+);
+
+const Actions = ({ children }) => <div className="ct-actions">{children}</div>;
+
+const Primary = ({ children, onClick }) => (
+  <button className="ct-primary" onClick={onClick}>
+    {children}
+  </button>
+);
+
+const Secondary = ({ children, onClick }) => (
+  <button className="ct-secondary" onClick={onClick}>
+    {children}
+  </button>
+);

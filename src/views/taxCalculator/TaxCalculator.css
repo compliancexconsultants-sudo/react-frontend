@@ -1,105 +1,243 @@
-.groww-container {
-  max-width: 850px;
-  margin: auto;
-  padding: 20px;
+/* ================= PAGE ================= */
+.ct-page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
 }
 
-.title {
-  font-size: 32px;
-  font-weight: 700;
+/* ================= TABS ================= */
+.ct-tabs {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid #e5e7eb;
   margin-bottom: 20px;
+  overflow-x: auto;
 }
 
-/* White Main Card */
-.groww-card {
-  background: white;
-  color: black;
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-  border: 1px solid #f0f0f0;
+.ct-tabs::-webkit-scrollbar {
+  display: none;
 }
 
-/* Collapse */
-.label {
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
-}
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px solid #f3f3f3;
-}
-
-.row:last-child {
-  border-bottom: none;
-}
-
-/* Button */
-.calculate-btn {
-  width: 160px;
-  height: 42px;
-  margin-top: 20px;
-  background: #00b386 !important;
-  border-radius: 8px !important;
-  font-size: 15px !important;
-  font-weight: 600 !important;
-}
-/* ------------------- RESULT CARD ------------------- */
-
-.result {
-  margin-top: 30px;
-  padding: 25px;
-  border-radius: 16px;
-  background: white;
-  color: black;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
-  border: 1px solid #ececec;
-}
-
-.result h2 {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 18px;
-  color: #222;
-}
-
-.result p {
-  font-size: 15px;
+.ct-tabs button {
+  background: none;
+  border: none;
   padding: 10px 0;
-  border-bottom: 1px solid #f3f3f3;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ct-tabs .active {
+  color: #2563eb;
+  border-bottom: 2px solid #2563eb;
+}
+
+/* ================= LAYOUT ================= */
+.ct-layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, 360px);
+  gap: 32px;
+}
+
+/* ================= FORM ================= */
+.ct-form {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.ct-top {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.ct-select {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ct-select label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ct-select select {
+  height: 44px;
+  padding: 6px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+/* ================= GRID ================= */
+.ct-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 24px;
+}
+
+/* ================= FIELD ================= */
+.ct-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ct-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.ct-field input {
+  width: 100%;
+  height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+/* ================= ACTIONS ================= */
+.ct-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.ct-primary {
+  background: #2563eb;
+  color: white;
+  border-radius: 6px;
+  height: 44px;
+  padding: 0 22px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.ct-secondary {
+  background: white;
+  border: 1px solid #d1d5db;
+  height: 44px;
+  padding: 0 22px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ================= SUMMARY ================= */
+.ct-summary {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  height: fit-content;
+}
+
+.ct-summary h3 {
+  margin-bottom: 12px;
+}
+
+.ct-row {
   display: flex;
   justify-content: space-between;
-  color: #444;
+  margin-bottom: 12px;
+  font-size: 15px;
 }
 
-.result p:last-child {
-  border-bottom: none;
+.ct-row.highlight {
+  background: #ecfeff;
+  padding: 10px;
+  border-radius: 8px;
 }
 
-.result h3 {
-  margin-top: 18px;
-  font-size: 18px;
+.ct-save {
+  background: #dcfce7;
+  padding: 12px;
+  text-align: center;
+  border-radius: 8px;
   font-weight: 700;
-  background: #f7f8ff;
-  padding: 12px 18px;
-  border-radius: 10px;
-  color: #222;
-  border: 1px solid #e5e7ff;
+  font-size: 15px;
 }
 
-/* Highlighting better regime */
-.best-regime {
-  background: #e8fff5 !important; /* light green */
-  border: 1px solid #23c983 !important;
-  color: #11995c !important;
+/* ================= MOBILE ================= */
+
+/* Phones */
+@media (max-width: 599px) {
+  .ct-page {
+    padding: 16px 12px 28px;
+  }
+
+  .ct-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .ct-form {
+    padding: 16px;
+  }
+
+  .ct-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .ct-actions {
+    flex-direction: column-reverse;
+  }
+
+  .ct-primary,
+  .ct-secondary {
+    width: 100%;
+  }
+
+  .ct-summary {
+    padding: 16px;
+  }
+
+  .ct-row {
+    font-size: 14px;
+  }
+
+  .ct-save {
+    font-size: 14px;
+  }
 }
 
-.worse-regime {
-  background: #fff1f1 !important;
-  border: 1px solid #ffb6b6 !important;
-  color: #d62323 !important;
+/* Small phones (very compact) */
+@media (max-width: 360px) {
+  .ct-page {
+    padding: 12px 10px;
+  }
+
+  .ct-primary,
+  .ct-secondary {
+    height: 42px;
+    font-size: 14px;
+  }
+}
+
+/* Tablets & large phones */
+@media (min-width: 600px) and (max-width: 899px) {
+  .ct-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .ct-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Desktop enhancement */
+@media (min-width: 1024px) {
+  .ct-summary {
+    position: sticky;
+    top: 24px;
+  }
 }

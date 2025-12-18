@@ -38,7 +38,7 @@
 }
 
 .primary-btn {
-  background: #4f46e5;
+  background: #14274D;
   color: white;
   border: none;
   font-size: 16px;
@@ -87,7 +87,7 @@ select.auth-input {
 }
 
 .primary-btn {
-  background: #4f46e5;
+  background: #14274D;
   color: white;
   width: 100%;
   padding: 13px;
@@ -136,7 +136,7 @@ select.auth-input {
 }
 
 .auth-footer a {
-  color: #4f46e5;
+  color: #14274D;
   font-weight: 700;
 }
 
@@ -153,6 +153,6 @@ select.auth-input {
 }
 
 .auth-footer a {
-  color: #4f46e5;
+  color: #14274D;
   font-weight: 600;
 }

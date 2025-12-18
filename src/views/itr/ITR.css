@@ -76,7 +76,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #4f46e5;
+  color: #14274D;
   margin-bottom: 12px;
 }
 
@@ -117,7 +117,7 @@
 }
 
 .doc-icon {
-  background: #4f46e5;
+  background: #14274D;
   color: white;
   font-size: 26px;
   width: 50px;
@@ -184,7 +184,7 @@
 
 /* Fake select button */
 .upload-box button {
-  background: #4f46e5;
+  background: #14274D;
   color: white;
   border: none;
   padding: 6px 14px;

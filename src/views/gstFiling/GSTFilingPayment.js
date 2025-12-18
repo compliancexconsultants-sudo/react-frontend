@@ -18,7 +18,7 @@ const GSTFilingPayment = () => {
         name: "LegalHub - GST Filing",
         description: "GST Filing Payment",
         handler: () => navigate("/payment-success"),
-        theme: { color: "#4f46e5" },
+        theme: { color: "#14274D" },
       });
       rzp.open();
     };

@@ -6,9 +6,8 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-content">
 
-        <div className="column">
-          <h2 className="footer-logo">⚖️ LegalHub</h2>
-          <p>Your trusted partner for legal & CA services.</p>
+        <div style={{display:'flex', justifyContent:'center'}} className="column">
+          <img src={require("../assets/logo.png")} alt="CX Consultants" style={{ width: '20%', height: '60%', objectFit: 'contain' }} />
         </div>
 
         <div className="column">

@@ -1,12 +1,15 @@
-.layout-container {
+/* src/components/Layout.css */
+
+.layout-root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  background: #f5f7fb;
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #111827;
 }
 
-.main-content {
+.layout-main {
   flex: 1;
-  padding: 60px 40px;
-  color: white;
+  padding-top: 10px; /* space for sticky header */
 }

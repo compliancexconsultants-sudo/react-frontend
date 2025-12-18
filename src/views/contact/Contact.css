@@ -1,72 +1,77 @@
 .contact-container {
-  max-width: 650px;
+  max-width: 900px;
   margin: auto;
-  color: white;
+  color: #111827;
+  padding: 40px 20px;
   text-align: center;
-  padding: 20px;
 }
 
 /* TITLE */
 .contact-title {
   font-size: 36px;
   font-weight: 800;
+  color: #1f2937;
 }
 
-/* SUBTEXT */
 .contact-sub {
-  opacity: 0.85;
-  margin-bottom: 30px;
+  font-size: 16px;
+  opacity: 0.7;
+  margin-bottom: 40px;
 }
 
 /* INFO GRID */
-.contact-grid {
+.contact-info-section {
   display: flex;
-  justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
-  margin-bottom: 30px;
+  justify-content: center;
+  margin-bottom: 40px;
 }
 
 .contact-card {
-  background: rgba(255,255,255,0.15);
+  background: white;
   padding: 20px;
   border-radius: 14px;
-  width: 40%;
-  backdrop-filter: blur(10px);
+  width: 260px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: 0.3s;
 }
 
-/* FORM */
-.contact-form {
-  margin-top: 20px;
+.contact-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+/* FORM CARD */
+.form-card {
+  background: white;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
   text-align: left;
+  margin-bottom: 40px;
 }
 
-/* FIX INPUT WIDTH + BACKGROUND + PLACEHOLDER */
-.input {
-  width: 100% !important;
+.form-card h2 {
+  margin-bottom: 20px;
+  color: #1f2937;
+}
+
+/* INPUTS */
+.input,
+.textarea {
+  width: 100%;
   border-radius: 10px !important;
-  height: 45px;
-  padding: 8px 12px;
+  padding: 10px 14px;
   margin-bottom: 15px;
-  background: rgba(255,255,255,0.2) !important;
-  border: 1px solid rgba(255,255,255,0.3) !important;
-  color: #fff !important;
+  background: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+  color: #111827 !important;
 }
 
-/* FIX PLACEHOLDER VISIBILITY */
-.input::placeholder {
-  color: rgba(255,255,255,0.8) !important;
-}
-
-/* TEXTAREA FIX */
-.ant-input-textarea textarea {
-  background: rgba(255,255,255,0.2) !important;
-  border-radius: 10px !important;
-  color: white !important;
-}
-
-.ant-input-textarea textarea::placeholder {
-  color: rgba(255,255,255,0.8) !important;
+.input::placeholder,
+.textarea::placeholder {
+  color: #6b7280 !important;
 }
 
 /* BUTTON */
@@ -75,4 +80,21 @@
   height: 45px;
   border-radius: 10px !important;
   font-weight: 600;
+  background: #6366f1;
+}
+
+.send-button:hover {
+  background: #14274D !important;
+}
+
+/* MAP CARD */
+.map-card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.map-card h2 {
+  margin-bottom: 15px;
 }

@@ -1,43 +1,76 @@
 .about-container {
   max-width: 1000px;
   margin: auto;
-  color: white;
+  padding: 40px 20px;
+  color: #111827;
 }
 
+/* HERO SECTION */
 .about-hero {
   text-align: center;
-  padding: 20px;
+  margin-bottom: 40px;
 }
 
 .about-hero h1 {
-  font-size: 38px;
+  font-size: 40px;
   font-weight: 800;
+  color: #1f2937;
 }
 
 .about-hero p {
   font-size: 17px;
-  opacity: 0.85;
-  max-width: 700px;
-  margin: 10px auto;
+  opacity: 0.75;
+  max-width: 750px;
+  margin: 12px auto;
+  line-height: 1.6;
 }
 
+/* GRID SECTION */
 .about-grid {
-  margin-top: 40px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
 }
 
+/* WHITE CARDS */
 .about-card {
-  background: rgba(255,255,255,0.15);
+  background: white;
   padding: 25px;
   border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: 0.3s ease;
   text-align: center;
-  backdrop-filter: blur(10px);
 }
 
+.about-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* CARD HEADING */
 .about-card h2 {
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 10px;
+  color: #1f2937;
+}
+
+/* STORY SECTION */
+.story-card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.story-card h2 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.story-card p {
+  color: #374151;
+  line-height: 1.7;
 }

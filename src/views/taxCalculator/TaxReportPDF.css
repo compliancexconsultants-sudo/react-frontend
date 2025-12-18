@@ -1,0 +1,237 @@
+#pdf-root {
+  font-family: Inter, Arial, sans-serif !important;
+}
+
+.pdf-page {
+  width: 794px;
+  height: 1123px;            /* ⬅️ FIXED A4 HEIGHT */
+  padding: 28px;
+  background: #ffffff;
+  position: relative;
+  box-sizing: border-box;   /* ⬅️ VERY IMPORTANT */
+  page-break-after: always;
+}
+
+
+
+/* WATERMARK */
+.pdf-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 520px;
+  opacity: 0.08;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+
+
+/* Keep content above watermark */
+
+.pdf-page > *:not(.pdf-watermark) {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* HEADER */
+.pdf-header {
+  background: linear-gradient(135deg, #0f2a44, #1e3a5f);
+  color: white;
+  padding: 28px;
+  border-radius: 14px;
+}
+
+.pdf-header.slim {
+  padding: 22px;
+}
+
+.company-header {
+  display: flex;
+  flex-direction: column;  /* ⬅️ stack vertically */
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+
+.company-logo {
+  height: 42px;
+}
+
+.company-name {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.pdf-header h1 {
+  margin: 0;
+}
+
+.pdf-header-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.pill {
+  background: #22c55e;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+/* SECTIONS */
+.section-title {
+  margin-top: 16px;
+  border-bottom: 3px solid #22c55e;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+/* SUMMARY */
+.summary-box {
+  background: #ecfdf5;
+  border-left: 6px solid #22c55e;
+  padding: 16px;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+/* TABLE */
+.pdf-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+.pdf-table th {
+  background: #0f2a44;
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+
+.pdf-table td {
+  padding: 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.total-row {
+  background: #f8fafc;
+  font-weight: bold;
+}
+
+/* TAX CARDS */
+.tax-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.tax-card {
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  border: 2px solid transparent;
+}
+
+.tax-card.old {
+  border-color: #ef4444;
+}
+
+.tax-card.new {
+  border-color: #22c55e;
+  background: #ecfdf5;
+}
+
+.tax-card.save {
+  border-color: #22c55e;
+}
+
+.recommended {
+  color: #16a34a;
+  font-weight: bold;
+}
+
+.pill-green {
+  background: #22c55e;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+/* CTA */
+.cta-box {
+  background: linear-gradient(135deg, #0f2a44, #1e3a5f);
+  color: white;
+  padding: 20px;
+  border-radius: 18px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.cta-box button {
+  background: #22c55e;
+  border: none;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 10px;
+  
+}
+
+/* SLABS */
+.slab-box {
+  margin-top: 22px;
+}
+
+.slab-box h3 {
+  background: #0f2a44;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.slab-desc {
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+/* FOOTER */
+.disclaimer {
+  margin-top: 30px;
+  font-size: 11px;
+  color: #6b7280;
+  text-align: center;
+}
+
+.page-number {
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.pdf-watermark-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-18deg);
+  font-size: 72px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #0f2a44;
+  opacity: 0.07;           /* visible but subtle */
+  z-index: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+

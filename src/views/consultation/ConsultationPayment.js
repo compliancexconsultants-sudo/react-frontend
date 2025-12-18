@@ -18,7 +18,7 @@ const ConsultationPayment = () => {
         name: "LegalHub - Legal Consultation",
         description: "Consultation Payment",
         handler: () => navigate("/payment-success"),
-        theme: { color: "#4f46e5" },
+        theme: { color: "#14274D" },
       });
       rzp.open();
     };

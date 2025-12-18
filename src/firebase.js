@@ -1,9 +1,9 @@
-// Install first:
-// npm install firebase
-
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
+// Your existing firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyDtjta9Q4RYxhNybUxTgyOsvlGgUUoPHzA",
   authDomain: "compliancexconsultants-adedc.firebaseapp.com",
@@ -14,7 +14,11 @@ const firebaseConfig = {
   measurementId: "G-KLVJ4F3GC3"
 };
 
+// Initialize
 const app = initializeApp(firebaseConfig);
 
+// Firebase Services
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
+export const db = getFirestore(app);
+export const storage = getStorage(app);
