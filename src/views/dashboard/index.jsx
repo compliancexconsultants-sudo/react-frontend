@@ -8,7 +8,15 @@ import CompanyRegistrationSteps from "../../components/companyregistrationsteps"
 const Dashboard = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("legalhubUser"));
-
+  const services = [
+    { name: "ITR Filing", path: "/itr-filing" },
+    { name: "GST Registration", path: "/gst-registration" },
+    { name: "GST Filing", path: "/gst-filing" },
+    { name: "Company Registration", path: "/PrivateLimited" },
+    { name: "Trademark Registration", path: "/trademark-registration" },
+    { name: "Legal Consultation", path: "/legal-consultation" },
+    { name: "Tax Calculator", path: "/tax-calculator" },
+  ];
   // Scroll reveal
   useEffect(() => {
     const els = document.querySelectorAll(".reveal, .reveal-left, .reveal-right");
@@ -91,17 +99,13 @@ const Dashboard = () => {
         </p>
 
         <div className="services-grid">
-          {[
-            "ITR Filing",
-            "GST Registration",
-            "GST Filing",
-            "Company Registration",
-            "Trademark Registration",
-            "Legal Consultation",
-            "Tax Calculator",
-          ].map((s, i) => (
-            <div key={i} className="service-card">
-              <h3>{s}</h3>
+          {services.map((s, i) => (
+            <div
+              key={i}
+              className="service-card"
+              onClick={() => navigate(s.path)}
+            >
+              <h3>{s.name}</h3>
               <span>Learn More →</span>
             </div>
           ))}

@@ -48,6 +48,101 @@
   align-items: center;
   gap: 14px;
 }
+/* MEGA MENU */
+.mega-menu {
+  background: #fff;
+  padding: 22px 26px;
+  border-radius: 12px;
+  width: 720px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.mega-title {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.6px;
+  color: #111;
+  margin-bottom: 18px;
+}
+
+.mega-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+.mega-grid span {
+  display: block;
+  padding: 6px 0;
+  font-size: 14px;
+  color: #444;
+  cursor: pointer;
+}
+
+.mega-grid span:hover {
+  color: #1677ff;
+}
+/* SIMPLE DROPDOWN */
+.simple-dropdown {
+  background: #fff;
+  padding: 18px 20px;
+  border-radius: 12px;
+  width: 280px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+}
+
+.dropdown-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  margin-bottom: 12px;
+  color: #111;
+}
+
+.simple-dropdown span {
+  display: block;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #444;
+  cursor: pointer;
+}
+
+.simple-dropdown span:hover {
+  color: #1677ff;
+}
+.mega-menu {
+  background: #fff;
+  padding: 22px 26px;
+  border-radius: 12px;
+  width: 760px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.mega-title {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.6px;
+  margin-bottom: 18px;
+  color: #111;
+}
+
+.mega-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+.mega-grid span {
+  display: block;
+  padding: 6px 0;
+  font-size: 14px;
+  color: #444;
+  cursor: pointer;
+}
+
+.mega-grid span:hover {
+  color: #1677ff;
+}
 
 /* BUTTONS */
 .clean-login {

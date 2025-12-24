@@ -1,0 +1,187 @@
+import React, { useEffect, useState } from "react";
+import Layout from "../../../components/Layout";
+import "./ITR.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { Upload, Button, Spin } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import API from "../../../utils/api";
+import Lottie from "lottie-react";
+import uploadAnim from "../../../animations/uploading.json";
+import successAnim from "../../../animations/Success.json";
+const SubmitDocuments = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const [service, setService] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [documents, setDocuments] = useState({});
+  const [isUploading, setIsUploading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  useEffect(() => {
+    loadService();
+  }, []);
+
+  const loadService = async () => {
+    try {
+      const res = await API.get(`/services/${'6937021f042de0ae1ad1d331'}`);
+      setService(res.data);
+
+      const initialDocs = {};
+      res.data.documents.forEach((doc) => (initialDocs[doc.key] = null));
+
+      setDocuments(initialDocs);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (info, key) => {
+    const fileObj = info?.file?.originFileObj || info.file;
+    setDocuments((prev) => ({
+      ...prev,
+      [key]: fileObj,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const loggedUser = JSON.parse(localStorage.getItem("legalhubUser"));
+      if (!loggedUser) return navigate("/login");
+
+      setIsUploading(true); // ⬅️ start loader
+
+      const formData = new FormData();
+      formData.append("serviceId", service._id);
+      formData.append("serviceName", service.name);
+      formData.append("serviceSlug", service.name);
+      formData.append("userId", loggedUser.uid);
+      formData.append("amount", service.price);
+      formData.append("tagId", service.tagId._id);
+
+      Object.keys(documents).forEach((key) => {
+        if (documents[key]) {
+          formData.append(key, documents[key]);
+        }
+      });
+
+      const res = await API.post("/cases/submit", formData);
+
+      // ✅ Upload finished
+      setIsUploading(false);
+      setIsSuccess(true); // ⬅️ show success animation
+
+      // ⏱️ Wait 4 seconds then redirect
+      setTimeout(() => {
+        navigate(`/service/${service._id}/payment`, {
+          state: {
+            amount: service.price,
+            caseId: res.data.case.caseId,
+            serviceName: service.name,
+          },
+        });
+      }, 4000);
+
+    } catch (error) {
+      setIsUploading(false);
+      console.log(error);
+      alert("Error while submitting documents");
+    }
+  };
+
+
+
+  if (loading) {
+    return (
+      <Layout>
+        <div style={{ textAlign: "center", padding: "80px" }}>
+          <Spin size="large" />
+        </div>
+      </Layout>
+    );
+  }
+
+  if (isUploading) {
+    return (
+      <div className="upload-overlay">
+        <Lottie animationData={uploadAnim} loop />
+        <p>Uploading documents, please wait...</p>
+      </div>
+    )
+  }
+
+  if (isSuccess) {
+    return (
+      <div className="upload-overlay">
+        <Lottie animationData={successAnim} loop={false} />
+        <p>Documents submitted successfully 🎉</p>
+      </div>
+    )
+  }
+  const isAllDocumentsUploaded = () => {
+    return Object.values(documents).every((file) => file !== null);
+  };
+
+
+  return (
+    <Layout>
+      <div className="itr-wrapper fade-up">
+
+        {/* LEFT SIDE — SERVICE INFO */}
+        <div className="itr-left">
+          <h1>{service.name}</h1>
+
+          <p className="itr-price">
+            Price: <span>₹{service.price}</span>
+          </p>
+
+          <p className="itr-small-desc">
+            Please upload the required documents below. Our experts will start processing your case instantly.
+          </p>
+
+          <div className="itr-benefits">
+            <div>✔ Expert CA Processing</div>
+            <div>✔ Fast Turnaround</div>
+            <div>✔ Document Privacy Protected</div>
+          </div>
+        </div>
+
+        {/* RIGHT SIDE — UPLOAD DOCUMENTS */}
+        <div className="itr-right">
+          <h2>Required Documents</h2>
+
+          <div className="upload-grid">
+            {service.documents.map((doc) => (
+              <div key={doc.key} className="upload-card light-card fade-up">
+                <label>{doc.label}</label>
+
+                <Upload
+                  beforeUpload={() => false}
+                  onChange={(file) => handleChange(file, doc.key)}
+                  showUploadList={true}
+                >
+                  <Button icon={<UploadOutlined />}>Upload File</Button>
+                </Upload>
+              </div>
+            ))}
+          </div>
+
+          <Button
+            type="primary"
+            className="submit-doc-btn"
+            onClick={handleSubmit}
+            disabled={isUploading || !isAllDocumentsUploaded()}
+          >
+            Submit & Continue
+          </Button>
+
+        </div>
+
+      </div>
+    </Layout>
+  );
+};
+
+export default SubmitDocuments;

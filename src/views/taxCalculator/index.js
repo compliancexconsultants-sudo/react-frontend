@@ -54,7 +54,7 @@ export default function TaxCalculator() {
     const oth = parseNum(other);
     const cry = parseNum(crypto);
 
-
+    /* ================= OLD REGIME ================= */
 
     const grossOld = Math.max(0, sal - ex) + int + oth;
     const stdOld = grossOld > 0 ? 50000 : 0;
@@ -66,52 +66,80 @@ export default function TaxCalculator() {
       parseNum(npsOrg) +
       parseNum(otherDed);
 
-    // ===== OLD REGIME =====
     const taxableOld = Math.max(0, grossOld - stdOld - dedOld);
 
-    // slab tax
     let slabOld = calcOldSlabTax(taxableOld, age);
 
-    // 87A rebate (ONLY on slab tax)
     let rebateOld = 0;
     if (taxableOld <= 500000) {
       rebateOld = Math.min(12500, slabOld);
     }
-    slabOld -= rebateOld;
-    if (slabOld < 0) slabOld = 0;
+    slabOld = Math.max(0, slabOld - rebateOld);
 
-    // crypto tax (NO rebate)
     const cryptoTaxOld = cry * 0.3;
 
-    // cess
-    const cessOld = (slabOld + cryptoTaxOld) * 0.04;
 
-    const totalOldTax = slabOld + cryptoTaxOld + cessOld;
+    // ---- SURCHARGE (OLD REGIME) ----
+    let surchargeOld = 0;
+    const baseOld = slabOld + cryptoTaxOld;
 
-    // ===== NEW REGIME =====
+    if (taxableOld > 5000000 && taxableOld <= 10000000) {
+      surchargeOld = baseOld * 0.10;
+    } else if (taxableOld > 10000000 && taxableOld <= 20000000) {
+      surchargeOld = baseOld * 0.15;
+    } else if (taxableOld > 20000000 && taxableOld <= 50000000) {
+      surchargeOld = baseOld * 0.25;
+    } else if (taxableOld > 50000000) {
+      surchargeOld = baseOld * 0.37;
+    }
+
+    // ---- CESS ----
+    const cessOld = (baseOld + surchargeOld) * 0.04;
+
+    const totalOldTax = baseOld + surchargeOld + cessOld;
+
+    /* ================= NEW REGIME ================= */
+
     const grossNew = sal + int + oth;
     const stdNew = grossNew > 0 ? 75000 : 0;
-    const taxableNew = Math.max(0, grossNew - stdNew - parseNum(npsOrg));
+    // ONLY employer NPS allowed in New Regime
+    const allowedNewDeduction = parseNum(npsOrg);
 
-    // slab tax
+    const taxableNew = Math.max(
+      0,
+      grossNew - stdNew - allowedNewDeduction
+    );
+
     let slabNew = calcNewSlabTax(taxableNew);
 
-    // 87A rebate (ONLY on slab tax)
     let rebateNew = 0;
     if (taxableNew <= 1200000) {
       rebateNew = Math.min(60000, slabNew);
     }
-    slabNew -= rebateNew;
-    if (slabNew < 0) slabNew = 0;
+    slabNew = Math.max(0, slabNew - rebateNew);
 
-    // crypto tax
     const cryptoTaxNew = cry * 0.3;
 
-    // cess
-    const cessNew = (slabNew + cryptoTaxNew) * 0.04;
+    // ---- SURCHARGE (NEW REGIME) ----
+    let surchargeNew = 0;
+    const baseForSurcharge = slabNew + cryptoTaxNew;
 
-    let totalNewTax = slabNew + cryptoTaxNew + cessNew;
-    // ===== MARGINAL RELIEF (NEW REGIME) =====
+    if (taxableNew > 5000000 && taxableNew <= 10000000) {
+      surchargeNew = baseForSurcharge * 0.10;
+    } else if (taxableNew > 10000000 && taxableNew <= 20000000) {
+      surchargeNew = baseForSurcharge * 0.15;
+    } else if (taxableNew > 20000000 && taxableNew <= 50000000) {
+      surchargeNew = baseForSurcharge * 0.25;
+    } else if (taxableNew > 50000000) {
+      surchargeNew = baseForSurcharge * 0.37;
+    }
+
+    // ---- CESS ----
+    const cessNew = (baseForSurcharge + surchargeNew) * 0.04;
+
+    let totalNewTax = baseForSurcharge + surchargeNew + cessNew;
+
+    // ---- MARGINAL RELIEF (NEW REGIME) ----
     if (taxableNew > 1200000 && taxableNew <= 1275000) {
       const excessIncome = taxableNew - 1200000;
       const maxTaxAllowed = excessIncome * 1.04; // incl. cess
@@ -121,7 +149,8 @@ export default function TaxCalculator() {
       }
     }
 
-    // ===== FINAL RESULT =====
+    /* ================= FINAL RESULT ================= */
+
     return {
       oldTax: Math.round(totalOldTax),
       newTax: Math.round(totalNewTax),
@@ -129,6 +158,7 @@ export default function TaxCalculator() {
     };
 
   }, [normalizedInputs, age]);
+
 
   /* ================= PDF DATA ================= */
   const pdfData = {

@@ -1,0 +1,127 @@
+/* ===================================================
+   WRAPPER: TWO COLUMN LAYOUT
+   =================================================== */
+.itr-wrapper {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 50px; /* <-- ADDED EXTRA SPACE BETWEEN LEFT & RIGHT */
+}
+.upload-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  text-align: center;
+}
+
+.upload-overlay p {
+  margin-top: 16px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* ===================================================
+   LEFT SIDE — SERVICE INFO
+   =================================================== */
+.itr-left h1 {
+  font-size: 40px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.itr-price {
+  font-size: 22px;
+  margin-top: 12px;
+  color: #374151;
+}
+
+.itr-price span {
+  color: #203560;
+  font-weight: bold;
+}
+
+.itr-small-desc {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4b5563;
+  max-width: 480px;
+}
+
+.itr-benefits {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 15px;
+  color: #1f2937;
+}
+
+.itr-benefits div {
+  background: #f3f4f6;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+/* ===================================================
+   RIGHT SIDE — UPLOAD DOCUMENTS
+   =================================================== */
+.itr-right h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 20px;
+}
+
+/* Card grid */
+.upload-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+/* Light theme upload cards */
+.light-card {
+  background: white !important;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  border: 1px solid #e5e7eb;
+}
+
+.light-card label {
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: block;
+  color: #111827;
+}
+
+/* Button */
+.submit-doc-btn {
+  margin-top: 35px;
+  width: 100%;
+  padding: 12px 0;
+  font-size: 16px;
+  border-radius: 12px;
+  font-weight: bold;
+  background: #14274D !important;
+}
+
+/* ===================================================
+   MOBILE RESPONSIVE
+   =================================================== */
+@media (max-width: 768px) {
+  .itr-wrapper {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}

@@ -10,7 +10,7 @@ import step4 from "../animations/step4-success.json";
 const steps = [
   { title: "Submit Details", anim: step1 },
   { title: "Upload Documents", anim: step2 },
-  { title: "Government Verification", anim: step3 },
+  { title: "Document Verification", anim: step3 },
   { title: "Company Registered", anim: step4 },
 ];
 
@@ -48,12 +48,11 @@ export default function CompanyRegistrationSteps() {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.heading}>Company Registration Process</h2>
+      <h2 style={styles.heading}>Our Process</h2>
       <p style={styles.subHeading}>
         Simple, transparent & government compliant process
       </p>
 
-      {/* ========= PROGRESS BAR ========= */}
       <div style={styles.progressTrack}>
         <motion.div
           style={{
