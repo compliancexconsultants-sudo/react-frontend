@@ -39,13 +39,14 @@ const Dashboard = () => {
           <span className="badge">Now facilitating instant business services</span>
 
           <h1>
-            Smart Legal & CA Solutions<br />
-            <span>For Modern Businesses</span>
+            Simplifying Business<br />
+            <span>Compliance in India</span>
           </h1>
 
           <p>
-            From GST filing to company registration — your complete compliance
-            partner with transparent pricing and expert assistance.
+            ComplianceX Consultants is your trusted partner for company registration, GST compliance,
+            income tax filing, and statutory compliance services in India. We support startups, professionals,
+            SMEs, and growing enterprises with accurate, timely, and hassle-free regulatory solutions.
           </p>
 
           <button
@@ -93,24 +94,68 @@ const Dashboard = () => {
 
       {/* ================= OUR SERVICES ================= */}
       <section className="services reveal">
-        <h2 style={{ color: '#203560' }} color="#203560">Our Services</h2>
+        <h2 style={{ color: '#203560' }}>Our Services</h2>
         <p>
-          Professional legal, tax and compliance services trusted by thousands of businesses.
+          Comprehensive compliance and regulatory support for startups, professionals and businesses across India.
         </p>
 
         <div className="services-grid">
-          {services.map((s, i) => (
-            <div
-              key={i}
-              className="service-card"
-              onClick={() => navigate(s.path)}
-            >
-              <h3>{s.name}</h3>
-              <span>Learn More →</span>
-            </div>
-          ))}
+
+          <div className="service-card">
+            <h3>Company & Business Registration</h3>
+            <p>
+              Private Limited Company, LLP, OPC, Partnership Firm, Sole Proprietorship,
+              MSME (Udyam) registration, PAN, TAN, and DSC support.
+            </p>
+          </div>
+
+          <div className="service-card">
+            <h3>GST Registration & Compliance</h3>
+            <p>
+              GST registration, return filing, ITC reconciliation, amendments,
+              notice handling, and audit support.
+            </p>
+          </div>
+
+          <div className="service-card">
+            <h3>Income Tax & ITR Filing</h3>
+            <p>
+              ITR filing for individuals, professionals, and businesses, advance tax planning,
+              TDS compliance, and assessment support.
+            </p>
+          </div>
+
+          <div className="service-card">
+            <h3>ROC & Statutory Compliance</h3>
+            <p>
+              Annual ROC filings, Director KYC, MCA forms, statutory registers,
+              and compliance monitoring.
+            </p>
+          </div>
+
+          <div className="service-card">
+            <h3>Advisory & Compliance Support</h3>
+            <p>
+              Corporate structuring, audit readiness, regulatory consultation,
+              and ongoing compliance assistance.
+            </p>
+          </div>
+
         </div>
       </section>
+      <section className="why-choose-section reveal">
+        <h2 className="why-choose-title">Why Choose ComplianceX Consultants</h2>
+
+        <div className="why-choose-list">
+          <div className="why-box">End-to-end compliance solutions</div>
+          <div className="why-box">Experienced compliance professionals</div>
+          <div className="why-box">Timely filings with proactive reminders</div>
+          <div className="why-box">Transparent process and dedicated support</div>
+          <div className="why-box">Pan-India service coverage</div>
+        </div>
+      </section>
+
+
       <section>
         <CompanyRegistrationSteps />
       </section>

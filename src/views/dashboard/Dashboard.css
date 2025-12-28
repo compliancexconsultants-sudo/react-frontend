@@ -123,6 +123,13 @@ section {
   text-align: center;
 }
 
+.service-card p {
+  margin-top: 10px;
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 .services h2 {
   font-size: 40px;
 }
@@ -137,9 +144,10 @@ section {
   max-width: 1100px;
   margin: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 28px;
 }
+
 
 .service-card {
   background: #f9fafb;
@@ -160,6 +168,56 @@ section {
   color: #203560;
   font-weight: 600;
 }
+
+@media(max-width: 900px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(max-width: 600px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* WHY CHOOSE SECTION */
+.why-choose-section {
+  background: #f9fafb;
+  padding: 110px 20px;
+  text-align: center;
+}
+
+.why-choose-title {
+  font-size: 34px;
+  font-weight: 800;
+  color: #203560;
+  margin-bottom: 40px;
+}
+
+.why-choose-list {
+  max-width: 900px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.why-box {
+  background: white;
+  padding: 18px 22px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  font-weight: 600;
+  color: #374151;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  transition: .3s;
+}
+
+.why-box:hover {
+  transform: translateY(-4px);
+  border-color: #203560;
+}
+
 
 /* ================= REVIEWS ================= */
 .reviews {

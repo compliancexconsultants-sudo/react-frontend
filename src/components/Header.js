@@ -3,9 +3,13 @@ import "./Header.css";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "antd";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
+import { useService } from '../states/ServiceContext'
+import gstRegistrationData from "../views/services-hard/gstRegistration/gstRegistration.data";
 // import API from "../utils/api";
 import logo from "../assets/logo.png";
+import esiRegistrationData from "../views/services-hard/data/esiRegistration.data";
 const Header = () => {
+  const { setServiceData } = useService();
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("legalhubUser"));
 
@@ -54,8 +58,12 @@ const Header = () => {
 
       <div className="mega-grid">
         <div>
-          <span onClick={() => navigate("/services/gst-registration")}>GST Registration</span>
-          <span onClick={() => navigate("/services/esi-registration")}>ESI Registration</span>
+          <span onClick={() => {
+            setServiceData(gstRegistrationData)
+            navigate("/CXServices")}}>GST Registration</span>
+          <span onClick={() => {
+            setServiceData(esiRegistrationData)
+            navigate("/CXServices")}}>ESI Registration</span>
           <span onClick={() => navigate("/services/udyog-aadhaar")}>Udyam / SSI Registration</span>
           <span onClick={() => navigate("/services/pan")}>PAN Application</span>
         </div>

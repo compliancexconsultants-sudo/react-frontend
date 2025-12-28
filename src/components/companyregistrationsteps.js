@@ -8,10 +8,10 @@ import step3 from "../animations/step3-verification.json";
 import step4 from "../animations/step4-success.json";
 
 const steps = [
-  { title: "Submit Details", anim: step1 },
-  { title: "Upload Documents", anim: step2 },
-  { title: "Document Verification", anim: step3 },
-  { title: "Company Registered", anim: step4 },
+  { title: "Contact our compliance experts", anim: step1 },
+  { title: "Share required documents securely", anim: step2 },
+  { title: "We handle filings and follow-ups", anim: step3 },
+  { title: "Receive confirmations and compliance updates", anim: step4 },
 ];
 
 export default function CompanyRegistrationSteps() {
@@ -26,12 +26,13 @@ export default function CompanyRegistrationSteps() {
 
     const interval = setInterval(() => {
       value += 1;
-      if (value > 100) value = 0;
+      if (value > 120) value = 0;
       setProgress(value);
     }, 60);
 
     return () => clearInterval(interval);
   }, []);
+
 
   /* ========= MOBILE DETECTION ========= */
   useEffect(() => {
@@ -48,9 +49,9 @@ export default function CompanyRegistrationSteps() {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.heading}>Our Process</h2>
+      <h2 style={styles.heading}>How It Works</h2>
       <p style={styles.subHeading}>
-        Simple, transparent & government compliant process
+        {/* Simple, transparent & government compliant process */}
       </p>
 
       <div style={styles.progressTrack}>
@@ -113,6 +114,7 @@ const styles = {
     fontSize: "34px",
     fontWeight: 700,
     marginBottom: "10px",
+    color: '#203560'
   },
 
   subHeading: {
@@ -146,7 +148,7 @@ const styles = {
 
   stepSlot: {
     flex: 1,
-    minHeight: "260px",
+    minHeight: "320px",
     display: "flex",
     justifyContent: "center",
     width: "100%",
@@ -158,15 +160,20 @@ const styles = {
     padding: "30px 20px",
     width: "100%",
     maxWidth: "260px",
-    boxShadow:
-      "0 20px 40px rgba(0,0,0,0.06)",
+    boxShadow: "0 20px 40px rgba(0,0,0,0.06)",
     textAlign: "center",
+    minHeight: "340px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between"
   },
 
   animBox: {
-    width: "160px",
-    margin: "0 auto",
+    width: "180px",
+    height: "180px",
+    margin: "0 auto"
   },
+
 
   stepTitle: {
     marginTop: "15px",

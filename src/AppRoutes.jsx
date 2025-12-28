@@ -40,6 +40,8 @@ import OPCRegistration from "./views/services-hard/opcRegistration/OPCRegistrati
 import TrustSocietyRegistration from "./views/services-hard/trustSocietyRegistration/TrustSocietyRegistration";
 import SubmitDocumentsCommon from "./views/services-hard/common/submitDocuments";
 import GoldCalculator from "./views/calculators/GoldCalculators";
+import GSTregistrations from "./views/services-hard/gstRegistration/ServiceDetail";
+import ServiceCommonDetails from "./views/services-hard/common/ServiceDetail";
 function Approutes() {
   const location = useLocation();
   return (
@@ -53,7 +55,9 @@ function Approutes() {
         <Route path="/HUFRegistration" element={<HUFRegistration />} />
         <Route path="/OPCRegistration" element={<OPCRegistration />} />
         <Route path="/TrustSocietyRegistration" element={<TrustSocietyRegistration />} />
+        <Route path="/GSTregistrations" element={<GSTregistrations />} />
         <Route path="/SubmitDocuments" element={<SubmitDocumentsCommon />} />
+        <Route path="/CXServices" element={<ServiceCommonDetails />} />
         <Route path="/service/:id/submit-documents" element={<SubmitDocuments />} />
         <Route path="/service/:id/payment" element={<Payment />} />
         <Route path="/tax-calculator" element={<TaxCalculator />} />

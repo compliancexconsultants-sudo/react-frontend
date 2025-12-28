@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import "./GoldCalculator.css";
 
-const API_KEY = "goldapi-980ssmjfvtjoz-io";
+const API_KEY = "goldapi-3eqcb8nxsmjo2l1zb-io";
 const REFRESH_INTERVAL = 5 * 60 * 1000; // 5 minutes
 
 // Bangalore city premium (₹ / gram)
@@ -63,7 +63,7 @@ export default function GoldCalculator() {
                 global24K * CLEARTAX_MULTIPLIER;
 
             // Bangalore adjustment (small local premium)
-            const bangalore24K = india24K_clearTax
+            const bangalore24K = india24K_clearTax - 315
 
             // Karat-wise prices
             const prices = {};
@@ -97,8 +97,7 @@ export default function GoldCalculator() {
 
     useEffect(() => {
         fetchGoldPrice();
-        const interval = setInterval(fetchGoldPrice, REFRESH_INTERVAL);
-        return () => clearInterval(interval);
+    
     }, [fetchGoldPrice]);
 
     const calculate = () => {
