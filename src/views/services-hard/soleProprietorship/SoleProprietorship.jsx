@@ -2,37 +2,44 @@ import Layout from "../../../components/Layout";
 import data from "./soleProprietorship.data";
 import "./ServiceDetails.css";
 import { useEffect, useLayoutEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SoleProprietorship() {
+  const navigate = useNavigate();
+
   useLayoutEffect(() => {
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    }, []);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
     const io = new IntersectionObserver(
-      entries => {
-        entries.forEach(e => {
+      (entries) => {
+        entries.forEach((e) => {
           if (e.isIntersecting) e.target.classList.add("active");
         });
       },
       { threshold: 0.15 }
     );
-    els.forEach(el => io.observe(el));
+    els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
 
   return (
     <Layout>
       <div className="svc-root">
-
         {/* HERO */}
         <section className="hero-glass">
           <div className="hero-content reveal">
             <h1>{data.hero.title}</h1>
             <p className="hero-sub">{data.hero.subtitle}</p>
             <p className="hero-desc">{data.hero.description}</p>
-            <button className="hero-cta">Start Registration →</button>
+            <button
+              onClick={() => navigate("/SubmitDocuments")}
+              className="hero-cta"
+            >
+              Start Registration →
+            </button>
           </div>
         </section>
 
@@ -45,7 +52,9 @@ export default function SoleProprietorship() {
         <Section title="Key Features" subtle>
           <div className="check-grid">
             {data.keyFeatures.map((f, i) => (
-              <div key={i} className="check-row">✔ {f}</div>
+              <div key={i} className="check-row">
+                ✔ {f}
+              </div>
             ))}
           </div>
         </Section>
@@ -79,7 +88,9 @@ export default function SoleProprietorship() {
         <Section title="Documents Required" subtle>
           <div className="doc-grid">
             {data.documents.map((d, i) => (
-              <div key={i} className="doc-pill reveal">{d}</div>
+              <div key={i} className="doc-pill reveal">
+                {d}
+              </div>
             ))}
           </div>
         </Section>
@@ -99,7 +110,9 @@ export default function SoleProprietorship() {
         <Section title="Tax & Compliance Requirements" subtle>
           <div className="check-grid">
             {data.compliance.map((c, i) => (
-              <div key={i} className="check-row">✔ {c}</div>
+              <div key={i} className="check-row">
+                ✔ {c}
+              </div>
             ))}
           </div>
         </Section>
@@ -108,7 +121,9 @@ export default function SoleProprietorship() {
         <Section title="Bank Account Setup (ComplianceX Consultants Assistance)">
           <div className="doc-grid">
             {data.bankAccount.map((b, i) => (
-              <div key={i} className="doc-pill reveal">{b}</div>
+              <div key={i} className="doc-pill reveal">
+                {b}
+              </div>
             ))}
           </div>
         </Section>
@@ -142,7 +157,9 @@ export default function SoleProprietorship() {
           <h2 className="reveal">Why Choose ComplianceX Consultants?</h2>
           <div className="trust-grid">
             {data.whyChoose.map((w, i) => (
-              <div key={i} className="trust-point reveal">{w}</div>
+              <div key={i} className="trust-point reveal">
+                {w}
+              </div>
             ))}
           </div>
         </section>
@@ -150,10 +167,11 @@ export default function SoleProprietorship() {
         {/* CTA */}
         <section className="final-cta reveal">
           <h2>Launch Your Business with ComplianceX Consultants</h2>
-          <p>Fast, affordable & expert-backed sole proprietorship registration</p>
+          <p>
+            Fast, affordable & expert-backed sole proprietorship registration
+          </p>
           <button>Get Started →</button>
         </section>
-
       </div>
     </Layout>
   );

@@ -1,0 +1,82 @@
+:root {
+  --heading: #0f172a;
+  --text: #374151;
+  --muted: #6b7280;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --primary: #4f46e5;
+}
+
+.terms-container {
+  max-width: 1150px;
+  margin: auto;
+  padding: 60px 22px;
+  color: var(--text);
+  line-height: 1.8;
+}
+
+/* HERO */
+.terms-hero {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.terms-hero h1 {
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--heading);
+}
+
+.terms-hero p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+/* CONTENT BOX */
+.terms-content {
+  background: var(--card);
+  padding: 32px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.06);
+}
+
+.terms-content h2 {
+  margin-top: 22px;
+  font-size: 22px;
+  color: var(--heading);
+  font-weight: 800;
+}
+
+.terms-content h3 {
+  margin-top: 12px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.terms-content p {
+  margin-top: 6px;
+  color: #444;
+}
+
+.terms-content ul {
+  margin: 10px 0 5px 18px;
+}
+
+.terms-content li {
+  margin-bottom: 6px;
+  color: #555;
+}
+
+/* Smooth Animation */
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.7s ease;
+}
+
+.fade-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}

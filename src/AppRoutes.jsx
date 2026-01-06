@@ -42,6 +42,8 @@ import SubmitDocumentsCommon from "./views/services-hard/common/submitDocuments"
 import GoldCalculator from "./views/calculators/GoldCalculators";
 import GSTregistrations from "./views/services-hard/gstRegistration/ServiceDetail";
 import ServiceCommonDetails from "./views/services-hard/common/ServiceDetail";
+import Terms from "./views/terms";
+import Privacy from "./views/privacy";
 function Approutes() {
   const location = useLocation();
   return (
@@ -53,6 +55,8 @@ function Approutes() {
         <Route path="/SoleProprietorship" element={<SoleProprietorship />} />
         <Route path="/LLPRegistration" element={<LLPRegistration />} />
         <Route path="/HUFRegistration" element={<HUFRegistration />} />
+        <Route path="/Terms" element={<Terms />} />
+        <Route path="/Privacy" element={<Privacy />} />
         <Route path="/OPCRegistration" element={<OPCRegistration />} />
         <Route path="/TrustSocietyRegistration" element={<TrustSocietyRegistration />} />
         <Route path="/GSTregistrations" element={<GSTregistrations />} />

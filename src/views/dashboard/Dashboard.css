@@ -38,6 +38,8 @@ section {
   margin: 18px auto;
   max-width: 620px;
   color: #4b5563;
+  line-height: 25px;
+  font-size: 400;
 }
 
 .primary-btn {
@@ -704,4 +706,7 @@ section {
   .what-we-do-right img {
     margin: auto;
   }
+}
+.error{
+  color: red;
 }

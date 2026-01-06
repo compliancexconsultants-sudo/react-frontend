@@ -2,8 +2,11 @@ import Layout from "../../../components/Layout";
 import data from "./hufRegistration.data";
 import "./ServiceDetails.css";
 import { useEffect, useLayoutEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function HUFRegistration() {
+    const navigate = useNavigate();
+  
   useLayoutEffect(() => {
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
@@ -32,7 +35,7 @@ export default function HUFRegistration() {
             <h1>{data.hero.title}</h1>
             <p className="hero-sub">{data.hero.subtitle}</p>
             <p className="hero-desc">{data.hero.description}</p>
-            <button className="hero-cta">Start HUF Registration →</button>
+            <button onClick={() => navigate("/SubmitDocuments")} className="hero-cta">Start HUF Registration →</button>
           </div>
         </section>
 

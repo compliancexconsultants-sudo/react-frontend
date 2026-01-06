@@ -1,58 +1,134 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../../components/Layout";
 import "./About.css";
 
 const About = () => {
+  useEffect(() => {
+  const elements = document.querySelectorAll(".fade-up, .pop");
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("in-view");
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  elements.forEach(el => observer.observe(el));
+
+  return () => observer.disconnect();
+}, []);
   return (
     <Layout>
       <div className="about-container fade-up">
 
-        {/* HERO SECTION */}
+        {/* HERO */}
         <section className="about-hero">
-          <h1>About CX Consultants</h1>
+          <h1>About ComplianceX Consultants</h1>
           <p>
-            We deliver legal, tax, and compliance solutions designed for modern businesses. 
-            Our mission is to simplify complex processes through expert guidance, transparency, and reliable service.
+            Your Trusted Partner in Business Compliance & Growth — simplifying legal, tax,
+            and corporate compliance for startups, SMEs, and enterprises across India.
           </p>
         </section>
 
-        {/* GRID SECTION */}
+        {/* INTRO */}
+        <section className="about-intro">
+          <p>
+            At ComplianceX Consultants, we specialize in making business compliance simple,
+            reliable, and stress-free. Navigating regulations like Company Registration,
+            GST, ITR & ROC can be complex — that’s where we step in.
+          </p>
+        </section>
+
+        {/* GRID */}
         <section className="about-grid">
-          
+
           <div className="about-card pop">
             <h2>Our Mission</h2>
             <p>
-              To make legal, tax, and compliance services accessible, transparent, and 
-              affordable — empowering businesses to focus on growth.
+              To empower businesses with clear, dependable, and efficient compliance solutions
+              so they can focus on growth — not paperwork.
             </p>
           </div>
 
           <div className="about-card pop">
-            <h2>Our Vision</h2>
+            <h2>Who We Are</h2>
             <p>
-              A world where entrepreneurs and businesses can operate seamlessly with 
-              full compliance and expert support at every step.
+              A team of experienced compliance professionals with deep knowledge of Indian
+              corporate & tax laws — backed by accuracy, transparency, and dedication.
             </p>
           </div>
 
           <div className="about-card pop">
-            <h2>Why Choose Us?</h2>
+            <h2>What We Do</h2>
             <p>
-              5,000+ happy clients, 100+ experts, fast turnaround, transparent pricing, 
-              and 24/7 dedicated support — your trusted compliance partner.
+              ✔ Company Registration & MCA Compliance <br />
+              ✔ GST Registration & Filing <br />
+              ✔ ITR Filing & Tax Advisory <br />
+              ✔ ROC Annual Returns <br />
+              ✔ TDS & Regulatory Compliance
             </p>
           </div>
 
         </section>
 
-        {/* TEAM / STORY SECTION OPTIONAL */}
+        {/* VALUES */}
+        <section className="values-section fade-up">
+          <h2>Our Values</h2>
+
+          <div className="values-grid">
+            <div className="value-box">
+              <h3>Integrity</h3>
+              <p>Ethical, honest, transparent service always.</p>
+            </div>
+
+            <div className="value-box">
+              <h3>Accuracy</h3>
+              <p>Precise documentation & compliance execution.</p>
+            </div>
+
+            <div className="value-box">
+              <h3>Timely Compliance</h3>
+              <p>We never miss deadlines — your peace of mind matters.</p>
+            </div>
+
+            <div className="value-box">
+              <h3>Client First</h3>
+              <p>Your goals come first — always.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* WHY CHOOSE US */}
         <section className="story-card fade-up">
-          <h2>Our Story</h2>
+          <h2>Why Businesses Choose Us</h2>
           <p>
-            CX Consultants began with a simple idea — to eliminate the confusion and difficulty 
-            that most individuals and businesses face in legal & compliance work.  
-            Today, we proudly support thousands across India with reliable CA, CS, and legal experts.
+            ✔ End-to-end compliance expertise <br />
+            ✔ Customized business-specific solutions <br />
+            ✔ Expert guidance & fast support <br />
+            ✔ Pan-India service coverage <br />
+            ✔ Transparent pricing — no hidden fees
           </p>
+        </section>
+
+        {/* PROMISE */}
+        <section className="story-card fade-up">
+          <h2>Our Promise</h2>
+          <p>
+            We deliver clear guidance, proactive alerts, friendly assistance, and complete
+            peace of mind — so you can grow confidently while we handle compliance.
+          </p>
+        </section>
+
+        {/* CTA */}
+        <section className="cta-box fade-up">
+          <h2>Ready to Work With Us?</h2>
+          <p>
+            Contact us today for a free consultation and compliance audit.
+          </p>
+
+          <button className="about-btn">Get Consultation</button>
         </section>
 
       </div>

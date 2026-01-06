@@ -2,37 +2,44 @@ import Layout from "../../../components/Layout";
 import data from "./opcRegistration.data";
 import "./ServiceDetails.css";
 import { useEffect, useLayoutEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function OPCRegistration() {
+  const navigate = useNavigate();
+
   useLayoutEffect(() => {
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    }, []);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
     const io = new IntersectionObserver(
-      entries => {
-        entries.forEach(e => {
+      (entries) => {
+        entries.forEach((e) => {
           if (e.isIntersecting) e.target.classList.add("active");
         });
       },
       { threshold: 0.15 }
     );
-    els.forEach(el => io.observe(el));
+    els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
 
   return (
     <Layout>
       <div className="svc-root">
-
         {/* HERO */}
         <section className="hero-glass">
           <div className="hero-content reveal">
             <h1>{data.hero.title}</h1>
             <p className="hero-sub">{data.hero.subtitle}</p>
             <p className="hero-desc">{data.hero.description}</p>
-            <button className="hero-cta">Start OPC Registration →</button>
+            <button
+              onClick={() => navigate("/SubmitDocuments")}
+              className="hero-cta"
+            >
+              Start OPC Registration →
+            </button>
           </div>
         </section>
 
@@ -45,7 +52,9 @@ export default function OPCRegistration() {
         <Section title="Key Features of an OPC" subtle>
           <div className="check-grid">
             {data.keyFeatures.map((f, i) => (
-              <div key={i} className="check-row">✔ {f}</div>
+              <div key={i} className="check-row">
+                ✔ {f}
+              </div>
             ))}
           </div>
         </Section>
@@ -78,7 +87,9 @@ export default function OPCRegistration() {
         <Section title="Documents Required for OPC Registration">
           <div className="doc-grid">
             {data.documents.map((d, i) => (
-              <div key={i} className="doc-pill reveal">{d}</div>
+              <div key={i} className="doc-pill reveal">
+                {d}
+              </div>
             ))}
           </div>
         </Section>
@@ -98,7 +109,9 @@ export default function OPCRegistration() {
         <Section title="Post-Registration Compliance for OPC">
           <div className="check-grid">
             {data.compliance.map((c, i) => (
-              <div key={i} className="check-row">✔ {c}</div>
+              <div key={i} className="check-row">
+                ✔ {c}
+              </div>
             ))}
           </div>
         </Section>
@@ -108,7 +121,9 @@ export default function OPCRegistration() {
           <h2 className="reveal">Why Choose ComplianceX Consultants?</h2>
           <div className="trust-grid">
             {data.whyChoose.map((w, i) => (
-              <div key={i} className="trust-point reveal">{w}</div>
+              <div key={i} className="trust-point reveal">
+                {w}
+              </div>
             ))}
           </div>
         </section>
@@ -119,7 +134,6 @@ export default function OPCRegistration() {
           <p>Fast, transparent & expert-led OPC registration</p>
           <button>Get Started →</button>
         </section>
-
       </div>
     </Layout>
   );

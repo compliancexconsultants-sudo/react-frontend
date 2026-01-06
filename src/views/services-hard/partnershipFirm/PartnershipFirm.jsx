@@ -2,37 +2,44 @@ import Layout from "../../../components/Layout";
 import data from "./partnershipFirm.data";
 import "./ServiceDetails.css";
 import { useEffect, useLayoutEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function PartnershipFirm() {
+  const navigate = useNavigate();
+
   useLayoutEffect(() => {
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    }, []);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
     const io = new IntersectionObserver(
-      entries => {
-        entries.forEach(e => {
+      (entries) => {
+        entries.forEach((e) => {
           if (e.isIntersecting) e.target.classList.add("active");
         });
       },
       { threshold: 0.15 }
     );
-    els.forEach(el => io.observe(el));
+    els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
 
   return (
     <Layout>
       <div className="svc-root">
-
         {/* HERO */}
         <section className="hero-glass">
           <div className="hero-content reveal">
             <h1>{data.hero.title}</h1>
             <p className="hero-sub">{data.hero.subtitle}</p>
             <p className="hero-desc">{data.hero.description}</p>
-            <button className="hero-cta">Start Registration →</button>
+            <button
+              onClick={() => navigate("/SubmitDocuments")}
+              className="hero-cta"
+            >
+              Start Registration →
+            </button>
           </div>
         </section>
 
@@ -40,7 +47,9 @@ export default function PartnershipFirm() {
         <Section title="Why Register a Partnership?">
           <div className="check-grid">
             {data.quickSummary.map((q, i) => (
-              <div key={i} className="check-row">✔ {q}</div>
+              <div key={i} className="check-row">
+                ✔ {q}
+              </div>
             ))}
           </div>
         </Section>
@@ -54,7 +63,9 @@ export default function PartnershipFirm() {
         <Section title="Types of Partnerships in India">
           <div className="check-grid">
             {data.types.map((t, i) => (
-              <div key={i} className="check-row">✔ {t}</div>
+              <div key={i} className="check-row">
+                ✔ {t}
+              </div>
             ))}
           </div>
         </Section>
@@ -63,7 +74,9 @@ export default function PartnershipFirm() {
         <Section title="Who Can Form a Partnership?" subtle>
           <div className="check-grid">
             {data.eligibility.map((e, i) => (
-              <div key={i} className="check-row">✔ {e}</div>
+              <div key={i} className="check-row">
+                ✔ {e}
+              </div>
             ))}
           </div>
         </Section>
@@ -84,7 +97,9 @@ export default function PartnershipFirm() {
         <Section title="Important Limitations & Risks" subtle>
           <div className="check-grid">
             {data.limitations.map((l, i) => (
-              <div key={i} className="check-row">⚠ {l}</div>
+              <div key={i} className="check-row">
+                ⚠ {l}
+              </div>
             ))}
           </div>
         </Section>
@@ -93,7 +108,9 @@ export default function PartnershipFirm() {
         <Section title="Partnership Deed — Essential Clauses">
           <div className="check-grid">
             {data.deedClauses.map((d, i) => (
-              <div key={i} className="check-row">✔ {d}</div>
+              <div key={i} className="check-row">
+                ✔ {d}
+              </div>
             ))}
           </div>
         </Section>
@@ -102,7 +119,9 @@ export default function PartnershipFirm() {
         <Section title="Documents Required" subtle>
           <div className="doc-grid">
             {data.documents.map((d, i) => (
-              <div key={i} className="doc-pill reveal">{d}</div>
+              <div key={i} className="doc-pill reveal">
+                {d}
+              </div>
             ))}
           </div>
         </Section>
@@ -134,7 +153,9 @@ export default function PartnershipFirm() {
         <Section title="Tax & Compliance After Registration">
           <div className="check-grid">
             {data.compliance.map((c, i) => (
-              <div key={i} className="check-row">✔ {c}</div>
+              <div key={i} className="check-row">
+                ✔ {c}
+              </div>
             ))}
           </div>
         </Section>
@@ -167,7 +188,9 @@ export default function PartnershipFirm() {
         <Section title="Types of Partners">
           <div className="check-grid">
             {data.partnerTypes.map((p, i) => (
-              <div key={i} className="check-row">✔ {p}</div>
+              <div key={i} className="check-row">
+                ✔ {p}
+              </div>
             ))}
           </div>
         </Section>
@@ -189,7 +212,9 @@ export default function PartnershipFirm() {
           <h2 className="reveal">Why Choose ComplianceX Consultants?</h2>
           <div className="trust-grid">
             {data.whyChoose.map((w, i) => (
-              <div key={i} className="trust-point reveal">{w}</div>
+              <div key={i} className="trust-point reveal">
+                {w}
+              </div>
             ))}
           </div>
         </section>
@@ -198,7 +223,9 @@ export default function PartnershipFirm() {
         <Section title="Quick Checklist — Get Started">
           <div className="check-grid">
             {data.checklist.map((c, i) => (
-              <div key={i} className="check-row">✔ {c}</div>
+              <div key={i} className="check-row">
+                ✔ {c}
+              </div>
             ))}
           </div>
         </Section>
@@ -209,14 +236,17 @@ export default function PartnershipFirm() {
           <p>Expert guidance, clear pricing & fast turnaround</p>
           <button>Get Started →</button>
         </section>
-
       </div>
     </Layout>
   );
 }
 
 const Section = ({ title, children, subtle, center }) => (
-  <section className={`svc-section ${subtle ? "subtle" : ""} ${center ? "center" : ""}`}>
+  <section
+    className={`svc-section ${subtle ? "subtle" : ""} ${
+      center ? "center" : ""
+    }`}
+  >
     <h2 className="reveal">{title}</h2>
     {children}
   </section>
