@@ -16,6 +16,7 @@ const Dashboard = () => {
     email: "",
     phone: "",
     service: "",
+    otherService: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -41,23 +42,23 @@ const Dashboard = () => {
     return Object.keys(temp).length === 0;
   };
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (!validate()) return;
+    e.preventDefault();
+    if (!validate()) return;
 
-  try {
-    await API.post("/contactus/contact", {
-      name: form.name,
-      email: form.email,
-      phoneNumber: form.phone,
-      service: form.service,
-    });
+    try {
+      await API.post("/contactus/contact", {
+        name: form.name,
+        email: form.email,
+        phoneNumber: form.phone,
+        service: form.service,
+      });
 
-    toast.success("Request submitted successfully!");
-  } catch (err) {
-    console.log(err);
-    toast.error("Something went wrong. Please try again!");
-  }
-};
+      toast.success("Request submitted successfully!");
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong. Please try again!");
+    }
+  };
 
   // const services = [
   //   { name: "ITR Filing", path: "/itr-filing" },
@@ -87,7 +88,6 @@ const Dashboard = () => {
 
   return (
     <Layout>
- <ToastContainer position="top-right" autoClose={3000} />      {/* ================= HERO ================= */}
       <section className="hero reveal">
         <div className="hero-inner">
           <span className="badge">
@@ -116,7 +116,8 @@ const Dashboard = () => {
           </button>
         </div>
       </section>
-
+      <ToastContainer position="top-right" autoClose={3000} />{" "}
+      {/* ================= HERO ================= */}
       {/* ================= WHY + FORM ================= */}
       <section className="why-section">
         <div className="why-left reveal-left">
@@ -171,13 +172,23 @@ const Dashboard = () => {
             <option>GST Registration</option>
             <option>ITR Filing</option>
             <option>Trademark</option>
+            <option>Others</option>
           </select>
           {errors.service && <span className="error">{errors.service}</span>}
+
+          {/* 👇 Show this only when "Others" selected */}
+          {form.service === "Others" && (
+            <input
+              placeholder="Please specify your service"
+              name="otherService"
+              value={form.otherService}
+              onChange={handleChange}
+            />
+          )}
 
           <button type="submit">Request Callback</button>
         </form>
       </section>
-
       {/* ================= OUR SERVICES ================= */}
       <section className="services reveal">
         <h2 style={{ color: "#203560" }}>Our Services</h2>
@@ -242,11 +253,9 @@ const Dashboard = () => {
           <div className="why-box">Pan-India service coverage</div>
         </div>
       </section>
-
       <section>
         <CompanyRegistrationSteps />
       </section>
-
       {/* ================= GOOGLE REVIEWS ================= */}
       <section className="reviews reveal">
         <h2>Hear What Our Customers Have To Say</h2>
@@ -279,9 +288,7 @@ const Dashboard = () => {
           </div>
         </div>
       </section>
-
       {/* ================= WHAT WE DO ================= */}
-
       <section className="what-we-do-section">
         <h2 className="what-we-do-label">WHAT WE DO</h2>
 
@@ -311,7 +318,6 @@ const Dashboard = () => {
           </div>
         </div>
       </section>
-
       {/* ================= FINAL CTA ================= */}
       <section className="cta reveal">
         <h2>Start Your Compliance Journey Today</h2>
@@ -322,7 +328,6 @@ const Dashboard = () => {
 
         <button onClick={() => navigate("/services")}>Get Started</button>
       </section>
-
       {/* ================= GOOGLE REVIEWS ================= */}
       <section className="google-reviews-section">
         <h2 className="reviews-heading">
@@ -330,12 +335,8 @@ const Dashboard = () => {
         </h2>
 
         <div className="google-rating">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
-            alt="Google"
-          />
           <span className="stars">★★★★★</span>
-          <span className="rating-text">4.9 out of 5 (7,864)</span>
+          <span className="rating-text">4.9 out of 5 (100+)</span>
           <span className="verified">✔ Verified</span>
         </div>
 
@@ -486,7 +487,6 @@ const Dashboard = () => {
           </details>
         </div>
       </section>
-
       {/* ================= EXTRA FORM ================= */}
       <section className="cta-form reveal">
         <h3 style={{ color: "#203560" }}>Still Have Questions?</h3>

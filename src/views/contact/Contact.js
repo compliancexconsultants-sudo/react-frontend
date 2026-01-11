@@ -19,12 +19,12 @@ const Contact = () => {
         <div className="contact-info-section">
           <div className="contact-card">
             <h3>📞 Phone</h3>
-            <p>+91 98765 43210</p>
+            <p>+91 8310792708</p>
           </div>
 
           <div className="contact-card">
             <h3>📧 Email</h3>
-            <p>support@legalhub.com</p>
+            <p>contact.complix@gmail.com</p>
           </div>
 
           <div className="contact-card">

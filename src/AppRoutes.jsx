@@ -44,6 +44,7 @@ import GSTregistrations from "./views/services-hard/gstRegistration/ServiceDetai
 import ServiceCommonDetails from "./views/services-hard/common/ServiceDetail";
 import Terms from "./views/terms";
 import Privacy from "./views/privacy";
+import ReferEarn from "./views/Refer/ReferEarn";
 function Approutes() {
   const location = useLocation();
   return (
@@ -53,6 +54,7 @@ function Approutes() {
         <Route path="/PrivateLimited" element={<PrivateLimited />} />
         <Route path="/PartnershipFirm" element={<PartnershipFirm />} />
         <Route path="/SoleProprietorship" element={<SoleProprietorship />} />
+        <Route path="/ReferEarn" element={<ReferEarn />} />
         <Route path="/LLPRegistration" element={<LLPRegistration />} />
         <Route path="/HUFRegistration" element={<HUFRegistration />} />
         <Route path="/Terms" element={<Terms />} />

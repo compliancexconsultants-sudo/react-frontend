@@ -75,6 +75,17 @@ const Header = () => {
     </div>
   );
 
+  const calculatorMenu = (
+    <div className="simple-dropdown">
+      <div className="dropdown-title">CALCULATORS</div>
+      <span onClick={() => { navigate("/tax-calculator")}}>Income Tax Calculator</span>
+      <span onClick={() => { navigate("/gst-calculator") }}>GST Calculator</span>
+      <span onClick={() => { navigate("/hra-calculator") }}>HRA Calculator</span>
+      <span onClick={() => { navigate("/emi-calculator") }}>EMI Calculator</span>
+      <span onClick={() => { navigate("/gold-calculator") }}>Gold Calculator</span>
+    </div>
+  );
+
   const startBusinessMenu = (
     <div className="mega-menu">
       <div className="mega-title">BUSINESS REGISTRATIONS</div>
@@ -115,7 +126,7 @@ const Header = () => {
           <span onClick={() => { navigate("/"); setMenuOpen(false); }}>Home</span>
 
           {/* Calculators */}
-          <Dropdown
+          {/* <Dropdown
             menu={{
               items: [
                 { key: "1", label: "Income Tax Calculator", onClick: () => navigate("/tax-calculator") },
@@ -127,7 +138,19 @@ const Header = () => {
             }}
           >
             <span className="dropdown-link">Calculators</span>
-          </Dropdown>
+          </Dropdown> */}
+            {isMobile ? (
+            <>
+              <span onClick={() => setOpenAcc(openAcc === "cal" ? null : "cal")}>
+               Calculators
+              </span>
+              {openAcc === "cal" && <div className="mobile-accordion">{calculatorMenu}</div>}
+            </>
+          ) : (
+            <Dropdown trigger={["hover"]} dropdownRender={() => calculatorMenu}>
+              <span className="dropdown-link">Calculators</span>
+            </Dropdown>
+          )}
 
           {/* BUSINESS */}
           {isMobile ? (
@@ -187,6 +210,7 @@ const Header = () => {
               <>
                 <div className="clean-avatar mobile-avatar">{user?.name?.charAt(0)?.toUpperCase()}</div>
                 <button onClick={() => { navigate("/profile"); setMenuOpen(false); }}>Profile</button>
+                <button onClick={() => { navigate("/ReferEarn"); setMenuOpen(false); }}>Refer And Earn</button>
                 <button onClick={() => { navigate("/orders"); setMenuOpen(false); }}>My Orders</button>
                 <button className="logout-btn" onClick={logout}>Logout</button>
               </>
@@ -211,7 +235,8 @@ const Header = () => {
                     { key: "1", label: "Dashboard", onClick: () => navigate("/") },
                     { key: "2", label: "My Orders", onClick: () => navigate("/orders") },
                     { key: "3", label: "Profile", onClick: () => navigate("/profile") },
-                    { key: "4", label: "Logout", danger: true, onClick: logout },
+                    { key: "4", label: "Refer And Earn", onClick: () => navigate("/ReferEarn") },
+                    { key: "5", label: "Logout", danger: true, onClick: logout },
                   ],
                 }}
               >

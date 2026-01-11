@@ -110,16 +110,14 @@ export default function TaxReportPDF({ data }) {
           <button>Explore ComplianceXConsultants App</button>
         </div>
 
-        <div style={{ marginTop: 30 }} className="page-number">Page 1 of 2</div>
+        <div style={{ marginTop: 30 }} className="page-number">Page 1 of 1</div>
       </div>
 
       {/* ================= PAGE 2 ================= */}
-      <div className="pdf-page">
+      {/* <div className="pdf-page">
 
-        {/* WATERMARK */}
         <div className="pdf-watermark-text">ComplianceXConsultants</div>
 
-        {/* SLAB HEADER */}
         <div className="pdf-header slim">
           <div className="company-header">
             <img src={logo} alt="Company Logo" className="company-logo" />
@@ -134,7 +132,6 @@ export default function TaxReportPDF({ data }) {
           and New Regime to determine which is more beneficial for your income level.
         </p>
 
-        {/* OLD REGIME */}
         <div className="slab-box">
           <h3>OLD TAX REGIME (Traditional Deductions)</h3>
           <table className="pdf-table">
@@ -175,7 +172,6 @@ export default function TaxReportPDF({ data }) {
           </table>
         </div>
 
-        {/* NEW REGIME */}
         <div className="slab-box">
           <h3>NEW TAX REGIME (No Deductions)</h3>
           <table className="pdf-table">
@@ -221,7 +217,7 @@ export default function TaxReportPDF({ data }) {
         </div>
 
         <div style={{ marginTop: 30 }} className="page-number">Page 2 of 2</div>
-      </div>
+      </div> */}
     </div>
   );
 }

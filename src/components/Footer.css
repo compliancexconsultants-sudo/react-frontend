@@ -26,3 +26,28 @@
   opacity: 0.8;
   cursor: pointer;
 }
+/* ===== SOCIAL MEDIA ===== */
+.footer-socials {
+  display: flex;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.footer-socials a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  transition: 0.3s ease;
+}
+
+.footer-socials a:hover {
+  background: #2563eb;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(37,99,235,0.6);
+}

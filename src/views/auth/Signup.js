@@ -68,7 +68,7 @@ const Signup = () => {
       <div className="auth-container fade-up">
 
         <h2>Create Account</h2>
-        <p className="auth-sub">Join LegalHub today</p>
+        <p className="auth-sub">Join CompliX today</p>
 
         <input
           type="text"

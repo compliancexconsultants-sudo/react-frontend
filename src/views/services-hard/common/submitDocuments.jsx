@@ -11,13 +11,14 @@ import { useService } from "../../../states/ServiceContext";
 
 const SubmitDocuments = () => {
   const navigate = useNavigate();
-  const { serviceData } = useService();   //  ⬅️ GLOBAL DATA
+  const { serviceData } = useService(); //  ⬅️ GLOBAL DATA
 
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
   const [documents, setDocuments] = useState({});
   const [isUploading, setIsUploading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  console.log(documents);
 
   useEffect(() => {
     if (!serviceData) {
@@ -27,16 +28,17 @@ const SubmitDocuments = () => {
 
     setService(serviceData);
 
-    const initialDocs = {};
-    serviceData.documents.forEach(doc => initialDocs[doc.key] = null);
-    setDocuments(initialDocs);
-
+    const formattedDocs = serviceData.documents.map((doc, index) => ({
+      key: `doc_${index + 1}`,
+      label: doc,
+    }));
+    setDocuments(formattedDocs);
     setLoading(false);
   }, []);
 
   const handleChange = (info, key) => {
     const fileObj = info?.file?.originFileObj || info.file;
-    setDocuments(prev => ({
+    setDocuments((prev) => ({
       ...prev,
       [key]: fileObj,
     }));
@@ -44,7 +46,6 @@ const SubmitDocuments = () => {
 
   const isAllDocumentsUploaded = () =>
     Object.values(documents).every((file) => file !== null);
-
 
   const handleSubmit = async () => {
     try {
@@ -80,7 +81,6 @@ const SubmitDocuments = () => {
           },
         });
       }, 4000);
-
     } catch (e) {
       setIsUploading(false);
       alert("Error submitting!");
@@ -118,16 +118,16 @@ const SubmitDocuments = () => {
   return (
     <Layout>
       <div className="itr-wrapper fade-up">
-
         <div className="itr-left">
           <h1>{service.name}</h1>
 
-          <p className="itr-price">
-            Price: <span>₹{service.price}</span>
-          </p>
+          {/* <p className="itr-price">
+            Price: <span>₹NA</span>
+          </p> */}
 
           <p className="itr-small-desc">
-            Please upload the required documents below. Our experts will start processing your case instantly.
+            Please upload the required documents below. Our experts will start
+            processing your case instantly.
           </p>
 
           <div className="itr-benefits">
@@ -135,13 +135,74 @@ const SubmitDocuments = () => {
             <div>✔ Fast Turnaround</div>
             <div>✔ Document Privacy Protected</div>
           </div>
+          <section className="data-security-section">
+            <h2> Your Data Is Safe With ComplianceX Consultants</h2>
+
+            <p className="intro-text">
+              At <strong>ComplianceX Consultants</strong>, we understand that
+              submitting documents online requires trust. Your privacy and data
+              security are our <strong>top priorities</strong>.
+            </p>
+
+            <div className="security-points">
+              <div className="security-item">
+                <h4>🛡️ 100% Secure Document Handling</h4>
+                <p>
+                  All documents uploaded through this page are protected using
+                  secure encryption protocols, ensuring complete confidentiality
+                  during upload, storage, and processing.
+                </p>
+              </div>
+
+              <div className="security-item">
+                <h4>👤 Strict Confidentiality Policy</h4>
+                <p>
+                  Access limited to authorized ComplianceX professionals No
+                  sharing, selling, or misuse of your data Used only for
+                  providing requested services
+                </p>
+              </div>
+
+              <div className="security-item">
+                <h4>🗄️ Safe Servers & Controlled Access</h4>
+                <p>
+                  Documents are stored on secure servers with restricted and
+                  monitored access. Files can be safely deleted after service
+                  completion upon request.
+                </p>
+              </div>
+
+              <div className="security-item">
+                <h4>⚖️ Compliance With Indian Data Protection Standards</h4>
+                <p>
+                  We follow best practices aligned with Indian IT and data
+                  protection regulations, ensuring lawful and ethical handling
+                  of your information.
+                </p>
+              </div>
+
+              <div className="security-item">
+                <h4>🤝 Trusted by Businesses & Professionals</h4>
+                <p>
+                  Trusted for licences, registrations, tax filings, legal, and
+                  government documentation. Your trust matters — and we protect
+                  it.
+                </p>
+              </div>
+            </div>
+
+            {/* <div className="submit-confidence">
+              ✅ <strong>Submit With Confidence:</strong> Your data is secure,
+              private, and handled responsibly by ComplianceX Consultants.
+            </div> */}
+          </section>
         </div>
 
         <div className="itr-right">
           <h2>Required Documents</h2>
 
           <div className="upload-grid">
-            {service.documents.map(doc => (
+            {documents.map((doc) => (
               <div key={doc.key} className="upload-card light-card fade-up">
                 <label>{doc.label}</label>
 
@@ -155,6 +216,15 @@ const SubmitDocuments = () => {
               </div>
             ))}
           </div>
+          <div>
+            <p>Referred By</p>
+            <input
+              name="reffered by"
+              placeholder="Name"
+              className="reffred-by"
+            />
+          </div>
+          {/* ===== Data Security Section ===== */}
 
           <Button
             type="primary"
@@ -165,7 +235,6 @@ const SubmitDocuments = () => {
             Submit & Continue
           </Button>
         </div>
-
       </div>
     </Layout>
   );

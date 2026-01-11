@@ -182,3 +182,136 @@
     flex-direction: column;
   }
 }
+.gold-news-section {
+    margin-top: 50px;
+    margin : 50px
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 80px;
+    margin-top: 20px;
+}
+
+.news-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+}
+
+.news-card:hover {
+    transform: translateY(-6px);
+}
+
+.news-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.news-content {
+    padding: 14px;
+}
+
+.news-content h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.news-content p {
+    font-size: 13px;
+    color: #555;
+}
+
+.news-content span {
+    font-size: 12px;
+    color: #2563eb;
+}
+.seo-gold-content {
+  max-width: 1100px;
+  margin: 80px auto;
+  padding: 40px;
+  background: linear-gradient(180deg, #ffffff, #f9fafb);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+  line-height: 1.9;
+}
+
+.seo-gold-content h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.seo-gold-content h2 {
+  font-size: 26px;
+  margin-top: 50px;
+  margin-bottom: 14px;
+  color: #1f2937;
+  position: relative;
+}
+
+.seo-gold-content h2::after {
+  content: "";
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #facc15, #f59e0b);
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  border-radius: 10px;
+}
+
+.seo-gold-content h3 {
+  font-size: 18px;
+  margin-top: 24px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.seo-gold-content p {
+  font-size: 16px;
+  color: #4b5563;
+  margin-bottom: 16px;
+}
+
+.seo-gold-content ul,
+.seo-gold-content ol {
+  margin: 20px 0 30px;
+  padding-left: 24px;
+}
+
+.seo-gold-content li {
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: #374151;
+}
+
+.seo-gold-content hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #e5e7eb, transparent);
+  margin: 60px 0;
+}
+
+/* FAQ style */
+.seo-gold-content h3 + p {
+  background: #f9fafb;
+  padding: 16px;
+  border-left: 5px solid #facc15;
+  border-radius: 8px;
+}
+
+/* Highlight boxes */
+.seo-gold-content ul li::marker {
+  color: #f59e0b;
+  font-weight: bold;
+}
