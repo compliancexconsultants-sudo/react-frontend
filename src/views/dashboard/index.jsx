@@ -110,7 +110,7 @@ const Dashboard = () => {
 
           <button
             className="primary-btn"
-            onClick={() => (user ? navigate("/services") : navigate("/signup"))}
+            onClick={() => (user ? navigate("/compliservices") : navigate("/signup"))}
           >
             Start Your Business
           </button>
@@ -304,7 +304,7 @@ const Dashboard = () => {
               throughout your business journey.
             </p>
 
-            <button className="what-we-do-btn">Popular Services</button>
+            <button onClick={()=> navigate('/compliservices')} className="what-we-do-btn">Popular Services</button>
           </div>
 
           {/* RIGHT LOTTIE */}
@@ -326,7 +326,7 @@ const Dashboard = () => {
           business.
         </p>
 
-        <button onClick={() => navigate("/services")}>Get Started</button>
+        <button onClick={() => navigate("/compliservices")}>Get Started</button>
       </section>
       {/* ================= GOOGLE REVIEWS ================= */}
       <section className="google-reviews-section">

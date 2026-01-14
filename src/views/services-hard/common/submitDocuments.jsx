@@ -8,45 +8,111 @@ import Lottie from "lottie-react";
 import uploadAnim from "../../../animations/uploading.json";
 import successAnim from "../../../animations/Success.json";
 import { useService } from "../../../states/ServiceContext";
+import API from "../../../utils/api";
 
 const SubmitDocuments = () => {
   const navigate = useNavigate();
-  const { serviceData } = useService(); //  ⬅️ GLOBAL DATA
+  const { serviceData } = useService();
 
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [documents, setDocuments] = useState({});
+
+  // ✅ SEPARATE STATES
+  const [requiredDocs, setRequiredDocs] = useState([]);
+  const [uploadedDocs, setUploadedDocs] = useState({});
+
   const [isUploading, setIsUploading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  console.log(documents);
+  const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+  const ALLOWED_TYPES = ["image/jpeg", "image/png", "application/pdf"];
 
   useEffect(() => {
     if (!serviceData) {
       alert("Service not selected. Redirecting...");
-      return navigate("/");
+      navigate("/");
+      return;
     }
 
     setService(serviceData);
 
-    const formattedDocs = serviceData.documents.map((doc, index) => ({
+    const docs = serviceData.documents.map((doc, index) => ({
       key: `doc_${index + 1}`,
       label: doc,
     }));
-    setDocuments(formattedDocs);
+
+    setRequiredDocs(docs);
     setLoading(false);
   }, []);
+  const compressImage = (file) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      const reader = new FileReader();
 
-  const handleChange = (info, key) => {
-    const fileObj = info?.file?.originFileObj || info.file;
-    setDocuments((prev) => ({
+      reader.onload = (e) => {
+        img.src = e.target.result;
+      };
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+
+        const MAX_WIDTH = 1200;
+        const scale = MAX_WIDTH / img.width;
+
+        canvas.width = MAX_WIDTH;
+        canvas.height = img.height * scale;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        canvas.toBlob(
+          (blob) => {
+            resolve(new File([blob], file.name, { type: "image/jpeg" }));
+          },
+          "image/jpeg",
+          0.7 // compression quality
+        );
+      };
+
+      reader.readAsDataURL(file);
+    });
+  };
+
+  // ✅ FILE UPLOAD
+  const handleChange = async (info, key) => {
+    let file = info?.file?.originFileObj || info.file;
+
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      alert("Only JPG, PNG or PDF files allowed");
+      return;
+    }
+
+    // PDF too large?
+    if (file.type === "application/pdf" && file.size > MAX_FILE_SIZE) {
+      alert("PDF must be less than 2MB. Please compress before uploading.");
+      return;
+    }
+
+    // If image, compress
+    if (file.type.startsWith("image/")) {
+      file = await compressImage(file);
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      alert("File is too large even after compression. Max 2MB allowed.");
+      return;
+    }
+
+    setUploadedDocs((prev) => ({
       ...prev,
-      [key]: fileObj,
+      [key]: file,
     }));
   };
 
+  // ✅ CHECK ALL FILES UPLOADED
   const isAllDocumentsUploaded = () =>
-    Object.values(documents).every((file) => file !== null);
+    requiredDocs.every((doc) => uploadedDocs[doc.key]);
 
+  // ✅ SUBMIT TO API
   const handleSubmit = async () => {
     try {
       const loggedUser = JSON.parse(localStorage.getItem("legalhubUser"));
@@ -55,38 +121,30 @@ const SubmitDocuments = () => {
       setIsUploading(true);
 
       const formData = new FormData();
-      formData.append("serviceId", service._id);
-      formData.append("serviceName", service.name);
-      formData.append("serviceSlug", service.name);
+      formData.append("serviceName", service.hero?.title || "Service");
+      formData.append("serviceSlug", service.id); // <-- THIS IS REQUIRED
       formData.append("userId", loggedUser.uid);
-      formData.append("amount", service.price);
-      formData.append("tagId", service.tagId?._id);
+      formData.append("amount", service.price || 0);
 
-      Object.keys(documents).forEach((key) => {
-        if (documents[key]) formData.append(key, documents[key]);
+      // append files
+      Object.keys(uploadedDocs).forEach((key) => {
+        formData.append(key, uploadedDocs[key]);
       });
 
-      // ⭐ your API here if needed
-      // const res = await API.post("/cases/submit", formData);
+      console.log("FILES BEING SENT:", uploadedDocs);
+
+      await API.post("/cases/submit", formData);
 
       setIsUploading(false);
       setIsSuccess(true);
-
-      setTimeout(() => {
-        navigate(`/service/${service._id}/payment`, {
-          state: {
-            amount: service.price,
-            caseId: "CASEID_FROM_API",
-            serviceName: service.name,
-          },
-        });
-      }, 4000);
     } catch (e) {
+      console.error(e);
       setIsUploading(false);
-      alert("Error submitting!");
+      alert("Error submitting documents");
     }
   };
 
+  /* ================= LOADING ================= */
   if (loading) {
     return (
       <Layout>
@@ -97,33 +155,39 @@ const SubmitDocuments = () => {
     );
   }
 
+  /* ================= UPLOADING ================= */
   if (isUploading) {
     return (
-      <div className="upload-overlay">
-        <Lottie animationData={uploadAnim} loop />
-        <p>Uploading documents, please wait...</p>
-      </div>
+      <Layout>
+        <div className="upload-overlay">
+          <Lottie animationData={uploadAnim} loop />
+          <p>Uploading documents, please wait...</p>
+        </div>
+      </Layout>
     );
   }
 
+  /* ================= SUCCESS ================= */
   if (isSuccess) {
     return (
-      <div className="upload-overlay">
-        <Lottie animationData={successAnim} loop={false} />
-        <p>Documents submitted successfully 🎉</p>
-      </div>
+      <Layout>
+        <div className="upload-overlay">
+          <Lottie animationData={successAnim} loop={false} />
+          <p>Documents submitted successfully 🎉</p>
+          <Button type="primary" onClick={() => navigate("/orders")}>
+            View My Orders
+          </Button>
+        </div>
+      </Layout>
     );
   }
 
+  /* ================= UI ================= */
   return (
     <Layout>
       <div className="itr-wrapper fade-up">
         <div className="itr-left">
-          <h1>{service.name}</h1>
-
-          {/* <p className="itr-price">
-            Price: <span>₹NA</span>
-          </p> */}
+          <h1>{service.hero?.title || service.name}</h1>
 
           <p className="itr-small-desc">
             Please upload the required documents below. Our experts will start
@@ -133,103 +197,37 @@ const SubmitDocuments = () => {
           <div className="itr-benefits">
             <div>✔ Expert CA Processing</div>
             <div>✔ Fast Turnaround</div>
-            <div>✔ Document Privacy Protected</div>
+            <div>✔ Data Secure</div>
           </div>
-          <section className="data-security-section">
-            <h2> Your Data Is Safe With ComplianceX Consultants</h2>
-
-            <p className="intro-text">
-              At <strong>ComplianceX Consultants</strong>, we understand that
-              submitting documents online requires trust. Your privacy and data
-              security are our <strong>top priorities</strong>.
-            </p>
-
-            <div className="security-points">
-              <div className="security-item">
-                <h4>🛡️ 100% Secure Document Handling</h4>
-                <p>
-                  All documents uploaded through this page are protected using
-                  secure encryption protocols, ensuring complete confidentiality
-                  during upload, storage, and processing.
-                </p>
-              </div>
-
-              <div className="security-item">
-                <h4>👤 Strict Confidentiality Policy</h4>
-                <p>
-                  Access limited to authorized ComplianceX professionals No
-                  sharing, selling, or misuse of your data Used only for
-                  providing requested services
-                </p>
-              </div>
-
-              <div className="security-item">
-                <h4>🗄️ Safe Servers & Controlled Access</h4>
-                <p>
-                  Documents are stored on secure servers with restricted and
-                  monitored access. Files can be safely deleted after service
-                  completion upon request.
-                </p>
-              </div>
-
-              <div className="security-item">
-                <h4>⚖️ Compliance With Indian Data Protection Standards</h4>
-                <p>
-                  We follow best practices aligned with Indian IT and data
-                  protection regulations, ensuring lawful and ethical handling
-                  of your information.
-                </p>
-              </div>
-
-              <div className="security-item">
-                <h4>🤝 Trusted by Businesses & Professionals</h4>
-                <p>
-                  Trusted for licences, registrations, tax filings, legal, and
-                  government documentation. Your trust matters — and we protect
-                  it.
-                </p>
-              </div>
-            </div>
-
-            {/* <div className="submit-confidence">
-              ✅ <strong>Submit With Confidence:</strong> Your data is secure,
-              private, and handled responsibly by ComplianceX Consultants.
-            </div> */}
-          </section>
         </div>
 
         <div className="itr-right">
           <h2>Required Documents</h2>
 
           <div className="upload-grid">
-            {documents.map((doc) => (
-              <div key={doc.key} className="upload-card light-card fade-up">
+            {requiredDocs.map((doc) => (
+              <div key={doc.key} className="upload-card light-card">
                 <label>{doc.label}</label>
 
                 <Upload
                   beforeUpload={() => false}
                   onChange={(file) => handleChange(file, doc.key)}
-                  showUploadList={true}
+                  showUploadList
                 >
-                  <Button icon={<UploadOutlined />}>Upload File</Button>
+                  <Button icon={<UploadOutlined />}>Upload</Button>
                 </Upload>
+
+                {uploadedDocs[doc.key] && (
+                  <p className="file-name">{uploadedDocs[doc.key].name}</p>
+                )}
               </div>
             ))}
           </div>
-          <div>
-            <p>Referred By</p>
-            <input
-              name="reffered by"
-              placeholder="Name"
-              className="reffred-by"
-            />
-          </div>
-          {/* ===== Data Security Section ===== */}
 
           <Button
             type="primary"
             className="submit-doc-btn"
-            disabled={!isAllDocumentsUploaded() || isUploading}
+            disabled={!isAllDocumentsUploaded()}
             onClick={handleSubmit}
           >
             Submit & Continue

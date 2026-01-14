@@ -74,12 +74,12 @@ const Orders = () => {
                   </button>
                 )}
 
-                <button
+                {/* <button
                   className="case-btn view-btn"
                   onClick={() => navigate(`/case/${c.caseId}`)}
                 >
                   View Case →
-                </button>
+                </button> */}
 
               </div>
             ))}

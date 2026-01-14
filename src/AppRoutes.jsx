@@ -45,6 +45,7 @@ import ServiceCommonDetails from "./views/services-hard/common/ServiceDetail";
 import Terms from "./views/terms";
 import Privacy from "./views/privacy";
 import ReferEarn from "./views/Refer/ReferEarn";
+import AllServices from "./views/AllServices";
 function Approutes() {
   const location = useLocation();
   return (
@@ -69,6 +70,7 @@ function Approutes() {
         <Route path="/tax-calculator" element={<TaxCalculator />} />
         <Route path="/services" element={<Services />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/compliservices" element={<AllServices />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<MyProfile />} />
         <Route path="/gst-registration" element={<GSTRegistration />} />
